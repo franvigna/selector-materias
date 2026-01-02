@@ -1,0 +1,464 @@
+[
+  {
+    "codigo": "3621",
+    "nombre": "Matemática Discreta",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3622",
+    "nombre": "Análisis Matemático I",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3623",
+    "nombre": "Programación Inicial",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3624",
+    "nombre": "Introducción a los Sistemas de Información",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3625",
+    "nombre": "Sistemas de Numeración",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3626",
+    "nombre": "Principios de Calidad de Software",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "1C1A"
+  },
+  {
+    "codigo": "3627",
+    "nombre": "Álgebra y Geometría Analítica I",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3628",
+    "nombre": "Física I",
+    "correlativas": ["3622"],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3629",
+    "nombre": "Programación Estructurada Básica",
+    "correlativas": ["3623"],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3630",
+    "nombre": "Introducción a la Gestión de Requisitos",
+    "correlativas": ["3624"],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3631",
+    "nombre": "Fundamentos de Sistemas Embebidos",
+    "correlativas": ["3625"],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3632",
+    "nombre": "Introducción a Proyectos Informáticos",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "2C1A"
+  },
+  {
+    "codigo": "3633",
+    "nombre": "Análisis Matemático II",
+    "correlativas": ["3622"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3634",
+    "nombre": "Física II",
+    "correlativas": ["3628"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3635",
+    "nombre": "Tópicos de Programación",
+    "correlativas": ["3629", "3621"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3636",
+    "nombre": "Bases de Datos",
+    "correlativas": ["3629", "3621"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3637",
+    "nombre": "Análisis de Sistemas",
+    "correlativas": ["3630"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3638",
+    "nombre": "Arquitectura de Computadoras",
+    "correlativas": ["3631"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3676",
+    "nombre": "Responsabilidad Social Universitaria",
+    "correlativas": ["3626"],
+    "horasSemanales": 4,
+    "periodo": "1C2A"
+  },
+  {
+    "codigo": "3639",
+    "nombre": "Análisis Matemático III",
+    "correlativas": ["3633"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3640",
+    "nombre": "Algoritmos y Estructuras de Datos",
+    "correlativas": ["3635"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3641",
+    "nombre": "Bases de Datos Aplicada",
+    "correlativas": ["3636"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3642",
+    "nombre": "Principios de Diseño de Sistemas",
+    "correlativas": ["3637", "3626"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3643",
+    "nombre": "Redes de Computadoras",
+    "correlativas": ["3638", "3634"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3644",
+    "nombre": "Gestión de las Organizaciones",
+    "correlativas": ["3632"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3680",
+    "nombre": "Taller de Integración",
+    "correlativas": ["3638", "3636", "3635", "3632", "3630", "3626", "3625", "3624", "3623", "3621"],
+    "horasSemanales": 4,
+    "periodo": "2C2A"
+  },
+  {
+    "codigo": "3645",
+    "nombre": "Álgebra y Geometría Analítica II",
+    "correlativas": ["3627"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3646",
+    "nombre": "Paradigmas de Programación",
+    "correlativas": ["3640", "3633"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3647",
+    "nombre": "Requisitos Avanzados",
+    "correlativas": ["3642"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3648",
+    "nombre": "Diseño de Software",
+    "correlativas": ["3642", "3636"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3649",
+    "nombre": "Sistemas Operativos",
+    "correlativas": ["3638"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3650",
+    "nombre": "Seguridad de la Información",
+    "correlativas": ["3643", "3638", "3635"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3675",
+    "nombre": "Práctica Profesional Supervisada",
+    "correlativas": ["3642"],
+    "horasSemanales": 4,
+    "periodo": "1C3A"
+  },
+  {
+    "codigo": "3651",
+    "nombre": "Probabilidad y Estadística",
+    "correlativas": ["3645", "3639", "3621"],
+    "horasSemanales": 4,
+    "periodo": "2C3A"
+  },
+  {
+    "codigo": "3652",
+    "nombre": "Programación Avanzada",
+    "correlativas": ["3641", "3646"],
+    "horasSemanales": 4,
+    "periodo": "2C3A"
+  },
+  {
+    "codigo": "3653",
+    "nombre": "Arquitecturas de Sistemas Software",
+    "correlativas": ["3648"],
+    "horasSemanales": 4,
+    "periodo": "2C3A"
+  },
+  {
+    "codigo": "3654",
+    "nombre": "Virtualización de Hardware",
+    "correlativas": ["3649", "3645", "3640"],
+    "horasSemanales": 4,
+    "periodo": "2C3A"
+  },
+  {
+    "codigo": "3655",
+    "nombre": "Auditoría y Legislación",
+    "correlativas": ["3650"],
+    "horasSemanales": 4,
+    "periodo": "2C3A"
+  },
+  {
+    "codigo": "3656",
+    "nombre": "Estadística Aplicada",
+    "correlativas": ["3651", "3641"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3657",
+    "nombre": "Autómatas y Gramática",
+    "correlativas": ["3646"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3658",
+    "nombre": "Programación Concurrente",
+    "correlativas": ["3654", "3646"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3659",
+    "nombre": "Gestión Aplicada al Desarrollo de Software I",
+    "correlativas": ["3653", "3647", "3644"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3660",
+    "nombre": "Sistemas Operativos Avanzados",
+    "correlativas": ["3654"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3661",
+    "nombre": "Gestión de Proyectos",
+    "correlativas": ["3651", "3650", "3644"],
+    "horasSemanales": 4,
+    "periodo": "1C4A"
+  },
+  {
+    "codigo": "3662",
+    "nombre": "Matemática Aplicada",
+    "correlativas": ["3651"],
+    "horasSemanales": 6,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3663",
+    "nombre": "Lenguajes y Compiladores",
+    "correlativas": ["3657"],
+    "horasSemanales": 4,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3664",
+    "nombre": "Inteligencia Artificial",
+    "correlativas": ["3651", "3646"],
+    "horasSemanales": 4,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3665",
+    "nombre": "Gestión Aplicada al Desarrollo de Software II",
+    "correlativas": ["3659", "3652"],
+    "horasSemanales": 4,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3666",
+    "nombre": "Seguridad Aplicada y Forensia",
+    "correlativas": ["3655", "3652", "3649"],
+    "horasSemanales": 4,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3667",
+    "nombre": "Gestión de la Calidad en Procesos de Sistemas",
+    "correlativas": ["3647"],
+    "horasSemanales": 4,
+    "periodo": "2C4A"
+  },
+  {
+    "codigo": "3668",
+    "nombre": "Inteligencia Artificial Aplicada",
+    "correlativas": ["3664", "3656"],
+    "horasSemanales": 4,
+    "periodo": "1C5A"
+  },
+  {
+    "codigo": "3669",
+    "nombre": "Innovación y Emprendedorismo",
+    "correlativas": ["3661"],
+    "horasSemanales": 4,
+    "periodo": "1C5A"
+  },
+  {
+    "codigo": "3670",
+    "nombre": "Ciencia de Datos",
+    "correlativas": ["3664", "3656"],
+    "horasSemanales": 4,
+    "periodo": "1C5A"
+  },
+  {
+    "codigo": "3671",
+    "nombre": "Proyecto Final de Carrera",
+    "correlativas": ["3667", "3661", "3660", "3659", "3656"],
+    "horasSemanales": 4,
+    "periodo": "1C5A"
+  },
+  {
+    "codigo": "3672",
+    "nombre": "Electiva I",
+    "correlativas": ["3658", "3661", "3663"],
+    "horasSemanales": 4,
+    "periodo": "1C5A"
+  },
+  {
+    "codigo": "3673",
+    "nombre": "Electiva II",
+    "correlativas": ["3662", "3666"],
+    "horasSemanales": 4,
+    "periodo": "2C5A"
+  },
+  {
+    "codigo": "3674",
+    "nombre": "Electiva III",
+    "correlativas": ["3664", "3665"],
+    "horasSemanales": 4,
+    "periodo": "2C5A"
+  },
+  {
+    "codigo": "3677",
+    "nombre": "Lenguaje Orientado a Negocios",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "ELECTIVA"
+  },
+  {
+    "codigo": "3678",
+    "nombre": "Tecnologías en Seguridad",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "ELECTIVA"
+  },
+  {
+    "codigo": "3679",
+    "nombre": "Visión Artificial",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "ELECTIVA"
+  },
+  {
+    "codigo": "901",
+    "nombre": "Inglés Transversal Nivel I",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  },
+  {
+    "codigo": "902",
+    "nombre": "Inglés Transversal Nivel II",
+    "correlativas": ["901"],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  },
+  {
+    "codigo": "903",
+    "nombre": "Inglés Transversal Nivel III",
+    "correlativas": ["902"],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  },
+  {
+    "codigo": "904",
+    "nombre": "Inglés Transversal Nivel IV",
+    "correlativas": ["903"],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  },
+  {
+    "codigo": "911",
+    "nombre": "Computación Transversal Nivel I",
+    "correlativas": [],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  },
+  {
+    "codigo": "912",
+    "nombre": "Computación Transversal Nivel II",
+    "correlativas": ["911"],
+    "horasSemanales": 4,
+    "periodo": "TRANSVERSAL"
+  }
+]

@@ -1,0 +1,529 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.selector-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+  padding: 2rem 1rem;
+}
+
+.selector-wrapper {
+  width: 80%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Header */
+.selector-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.selector-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.selector-header p {
+  color: #4a5568;
+  font-size: 1.1rem;
+}
+
+/* Estadísticas */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 4px solid;
+}
+
+/* Verde pastel - Cursadas (aprobadas) */
+.stat-card.cursada {
+  border-color: #81c784;
+}
+
+.stat-card.cursada .stat-numero {
+  color: #66bb6a;
+}
+
+/* Azul pastel - En curso */
+.stat-card.en-curso {
+  border-color: #64b5f6;
+}
+
+.stat-card.en-curso .stat-numero {
+  color: #42a5f5;
+}
+
+/* Amarillo pastel - Disponibles */
+.stat-card.disponible {
+  border-color: #ffd54f;
+}
+
+.stat-card.disponible .stat-numero {
+  color: #ffca28;
+}
+
+/* Rojo pastel - Bloqueadas */
+.stat-card.bloqueada {
+  border-color: #e57373;
+}
+
+.stat-card.bloqueada .stat-numero {
+  color: #ef5350;
+}
+
+.stat-card.total {
+  border-color: #9575cd;
+}
+
+.stat-card.total .stat-numero {
+  color: #7e57c2;
+}
+
+.stat-numero {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: #718096;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Filtros */
+.filtros-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.filtro-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 250px;
+}
+
+.filtro-grupo label {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.875rem;
+}
+
+.input-busqueda {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input-busqueda:focus {
+  outline: none;
+  border-color: #64b5f6;
+}
+
+.btn-reiniciar {
+  padding: 0.75rem 1.5rem;
+  background: #e57373;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.btn-reiniciar:hover {
+  background: #ef5350;
+}
+
+/* Tabla */
+.tabla-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tabla-materias {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-materias thead {
+  background: #5e35b1;
+  color: white;
+}
+
+.tabla-materias th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Separador de período */
+.separador-periodo {
+  background: linear-gradient(135deg, #7e57c2 0%, #9575cd 100%);
+}
+
+.separador-periodo td {
+  padding: 0 !important;
+}
+
+.periodo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: white;
+}
+
+.periodo-label {
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.periodo-count {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+/* Filas de materias */
+.tabla-materias tbody tr:not(.separador-periodo) {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.tabla-materias tbody tr:not(.separador-periodo):hover {
+  background: #f7fafc;
+}
+
+.tabla-materias td {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+/* Verde pastel - Cursadas (aprobadas) */
+.fila-materia.estado-cursada {
+  background: #e8f5e9;
+}
+
+.fila-materia.estado-cursada:hover {
+  background: #c8e6c9 !important;
+}
+
+/* Azul pastel - En curso */
+.fila-materia.estado-en-curso {
+  background: #e3f2fd;
+}
+
+.fila-materia.estado-en-curso:hover {
+  background: #bbdefb !important;
+}
+
+/* Amarillo pastel - Disponibles */
+.fila-materia.estado-disponible {
+  background: #fff9c4;
+}
+
+.fila-materia.estado-disponible:hover {
+  background: #fff59d !important;
+}
+
+/* Rojo pastel - Bloqueadas */
+.fila-materia.estado-bloqueada {
+  background: #ffebee;
+  opacity: 0.8;
+}
+
+.fila-materia.estado-bloqueada:hover {
+  background: #ffcdd2 !important;
+}
+
+.col-codigo {
+  font-weight: 700;
+  color: #4a5568;
+  font-family: 'Courier New', monospace;
+}
+
+.col-nombre {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.badge-electiva,
+.badge-transversal {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-electiva {
+  background: #b39ddb;
+  color: #4527a0;
+}
+
+.badge-transversal {
+  background: #ce93d8;
+  color: #6a1b9a;
+}
+
+.col-horas {
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.badge-estado {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* Verde pastel - Cursadas (aprobadas) */
+.badge-estado.estado-cursada {
+  background: #a5d6a7;
+  color: #2e7d32;
+}
+
+/* Azul pastel - En curso */
+.badge-estado.estado-en-curso {
+  background: #90caf9;
+  color: #1565c0;
+}
+
+/* Amarillo pastel - Disponibles */
+.badge-estado.estado-disponible {
+  background: #fff176;
+  color: #f57f17;
+}
+
+/* Rojo pastel - Bloqueadas */
+.badge-estado.estado-bloqueada {
+  background: #ef9a9a;
+  color: #c62828;
+}
+
+.sin-correlativas {
+  color: #a0aec0;
+}
+
+/* Verde para correlativas cumplidas */
+.correlativas-ok {
+  color: #66bb6a;
+  font-weight: 600;
+}
+
+.correlativas-faltantes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+/* Rojo pastel para correlativas faltantes */
+.correlativa-faltante {
+  background: #ffcdd2;
+  color: #c62828;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: help;
+}
+
+.col-acciones {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.btn-accion {
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+/* Azul pastel - En curso */
+.btn-accion.en-curso {
+  background: #64b5f6;
+  color: white;
+}
+
+.btn-accion.en-curso:hover {
+  background: #42a5f5;
+}
+
+/* Verde pastel - Cursada */
+.btn-accion.cursada {
+  background: #81c784;
+  color: white;
+}
+
+.btn-accion.cursada:hover {
+  background: #66bb6a;
+}
+
+/* Gris claro - Cancelar */
+.btn-accion.cancelar {
+  background: #e0e0e0;
+  color: #424242;
+}
+
+.btn-accion.cancelar:hover {
+  background: #bdbdbd;
+}
+
+/* Rojo pastel - Desmarcar */
+.btn-accion.desmarcar {
+  background: #e57373;
+  color: white;
+}
+
+.btn-accion.desmarcar:hover {
+  background: #ef5350;
+}
+
+.texto-bloqueada {
+  color: #ef5350;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.tabla-vacia {
+  text-align: center;
+  padding: 3rem !important;
+  color: #a0aec0;
+  font-style: italic;
+}
+
+/* Estados de carga */
+.loading-state,
+.error-state {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+.loading-state h2 {
+  color: #64b5f6;
+  font-size: 1.5rem;
+}
+
+.error-state h2 {
+  color: #ef5350;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.error-state p {
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+.error-state button {
+  padding: 0.75rem 2rem;
+  background: #64b5f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.error-state button:hover {
+  background: #42a5f5;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+  .selector-wrapper {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .tabla-container {
+    overflow-x: auto;
+  }
+  
+  .tabla-materias {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .selector-wrapper {
+    width: 95%;
+  }
+  
+  .selector-header h1 {
+    font-size: 2rem;
+  }
+  
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .filtros-container {
+    flex-direction: column;
+  }
+  
+  .filtro-grupo {
+    width: 100%;
+    min-width: auto;
+  }
+}
