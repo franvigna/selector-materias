@@ -33,7 +33,15 @@ const SelectorMaterias: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [materiasCursadas, setMateriasCursadas] = useState<string[]>([]);
   const [materiasEnCurso, setMateriasEnCurso] = useState<string[]>([]);
-  const [busqueda, setBusqueda] = useState<string>('');
+  const [busqueda, _] = useState<string>('');
+  const [anosSeleccionados, setAnosSeleccionados] = useState<{[key: string]: boolean}>({
+    '1': false,
+    '2': false,
+    '3': false,
+    '4': false,
+    '5': false,
+    'TRANSVERSAL': false
+  });
 
   useEffect(() => {
     const cargarMaterias = async () => {
@@ -92,57 +100,40 @@ const SelectorMaterias: React.FC = () => {
     );
   }, [materiasConEstado, busqueda]);
 
-  // Agrupar materias por período
-  // Agrupar materias por período
-const materiasAgrupadas = useMemo(() => {
-  const grupos: { [key: string]: MateriaConEstado[] } = {};
-  
-  materiasFiltradas.forEach(materia => {
-    if (!grupos[materia.periodo]) {
-      grupos[materia.periodo] = [];
-    }
-    grupos[materia.periodo].push(materia);
-  });
-
-  // Ordenar los períodos: primero por año, luego por cuatrimestre
-  const periodosOrdenados = Object.keys(grupos).sort((a, b) => {
-    // Transversales y electivas al final
-    if (a === 'TRANSVERSAL') return 1;
-    if (b === 'TRANSVERSAL') return 1;
-    if (a === 'ELECTIVA') return 1;
-    if (b === 'ELECTIVA') return 1;
+  const materiasAgrupadas = useMemo(() => {
+    const grupos: { [key: string]: MateriaConEstado[] } = {};
     
-    // Extraer año y cuatrimestre de cada período (formato: 1C1A)
-    const anioA = parseInt(a.charAt(2)); // posición 2 es el año
-    const anioB = parseInt(b.charAt(2));
-    const cuatrimestreA = parseInt(a.charAt(0)); // posición 0 es el cuatrimestre
-    const cuatrimestreB = parseInt(b.charAt(0));
-    
-    // Primero ordenar por año
-    if (anioA !== anioB) {
-      return anioA - anioB;
-    }
-    
-    // Si el año es el mismo, ordenar por cuatrimestre
-    return cuatrimestreA - cuatrimestreB;
-  });
+    materiasFiltradas.forEach(materia => {
+      if (!grupos[materia.periodo]) {
+        grupos[materia.periodo] = [];
+      }
+      grupos[materia.periodo].push(materia);
+    });
 
-  return periodosOrdenados.map(periodo => ({
-    periodo,
-    label: parsearPeriodo(periodo).label,
-    materias: grupos[periodo]
-  }));
-}, [materiasFiltradas]);
+    const periodosOrdenados = Object.keys(grupos).sort((a, b) => {
+      if (a === 'TRANSVERSAL') return 1;
+      if (b === 'TRANSVERSAL') return 1;
+      if (a === 'ELECTIVA') return 1;
+      if (b === 'ELECTIVA') return 1;
+      
+      const anioA = parseInt(a.charAt(2));
+      const anioB = parseInt(b.charAt(2));
+      const cuatrimestreA = parseInt(a.charAt(0));
+      const cuatrimestreB = parseInt(b.charAt(0));
+      
+      if (anioA !== anioB) {
+        return anioA - anioB;
+      }
+      
+      return cuatrimestreA - cuatrimestreB;
+    });
 
-  const estadisticas = useMemo(() => {
-    return {
-      cursadas: materiasCursadas.length,
-      en_curso: materiasEnCurso.length,
-      disponibles: materiasConEstado.filter(m => m.estado === 'disponible').length,
-      bloqueadas: materiasConEstado.filter(m => m.estado === 'bloqueada').length,
-      total: materias.length
-    };
-  }, [materiasCursadas, materiasEnCurso, materiasConEstado, materias]);
+    return periodosOrdenados.map(periodo => ({
+      periodo,
+      label: parsearPeriodo(periodo).label,
+      materias: grupos[periodo]
+    }));
+  }, [materiasFiltradas]);
 
   const cambiarEstado = (codigo: string, nuevoEstado: EstadoMateria) => {
     setMateriasCursadas(prev => prev.filter(c => c !== codigo));
@@ -160,13 +151,6 @@ const materiasAgrupadas = useMemo(() => {
     return materia ? materia.nombre : codigo;
   };
 
-  const reiniciar = () => {
-    if (window.confirm('¿Estás seguro de reiniciar todo?')) {
-      setMateriasCursadas([]);
-      setMateriasEnCurso([]);
-    }
-  };
-
   const getEstadoClass = (estado: EstadoMateria): string => {
     switch (estado) {
       case 'cursada': return 'estado-cursada';
@@ -177,13 +161,28 @@ const materiasAgrupadas = useMemo(() => {
     }
   };
 
-  const getEstadoTexto = (estado: EstadoMateria): string => {
-    switch (estado) {
-      case 'cursada': return '✓ Cursada';
-      case 'en_curso': return '📚 En curso';
-      case 'disponible': return '✓ Disponible';
-      case 'bloqueada': return '🔒 Bloqueada';
-      default: return '';
+  const toggleSeleccionAnio = (anio: string) => {
+    const nuevoEstado = !anosSeleccionados[anio];
+    setAnosSeleccionados(prev => ({...prev, [anio]: nuevoEstado}));
+
+    const materiasPorAnio = materiasConEstado.filter(m => {
+      if (anio === 'TRANSVERSAL') return m.periodo === 'TRANSVERSAL';
+      const anioMateria = m.periodo.charAt(2);
+      return anioMateria === anio;
+    });
+
+    if (nuevoEstado) {
+      materiasPorAnio.forEach(materia => {
+        if (materia.estado === 'disponible' || materia.estado === 'bloqueada') {
+          cambiarEstado(materia.codigo, 'cursada');
+        }
+      });
+    } else {
+      materiasPorAnio.forEach(materia => {
+        if (materia.estado === 'cursada' || materia.estado === 'en_curso') {
+          cambiarEstado(materia.codigo, 'disponible');
+        }
+      });
     }
   };
 
@@ -217,57 +216,15 @@ const materiasAgrupadas = useMemo(() => {
           <p>Ingenieria en Informática - UNLaM</p>
         </header>
 
-        {/* Barra de estadísticas */}
-        <div className="stats-container">
-          <div className="stat-card cursada">
-            <span className="stat-numero">{estadisticas.cursadas}</span>
-            <span className="stat-label">Cursadas</span>
-          </div>
-          <div className="stat-card en-curso">
-            <span className="stat-numero">{estadisticas.en_curso}</span>
-            <span className="stat-label">En curso</span>
-          </div>
-          <div className="stat-card disponible">
-            <span className="stat-numero">{estadisticas.disponibles}</span>
-            <span className="stat-label">Disponibles</span>
-          </div>
-          <div className="stat-card bloqueada">
-            <span className="stat-numero">{estadisticas.bloqueadas}</span>
-            <span className="stat-label">Bloqueadas</span>
-          </div>
-          <div className="stat-card total">
-            <span className="stat-numero">{estadisticas.total}</span>
-            <span className="stat-label">Total</span>
-          </div>
-        </div>
-
-        {/* Filtros */}
-        <div className="filtros-container">
-          <div className="filtro-grupo">
-            <label>Buscar materia:</label>
-            <input
-              type="text"
-              placeholder="Nombre o código..."
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              className="input-busqueda"
-            />
-          </div>
-
-          <button onClick={reiniciar} className="btn-reiniciar">
-            🔄 Reiniciar todo
-          </button>
-        </div>
+       
 
         {/* Tabla de materias agrupadas por período */}
-        <div className="tabla-container">
+        <div className="tabla-container tabla-scroll">
           <table className="tabla-materias">
             <thead>
               <tr>
                 <th>Código</th>
                 <th>Materia</th>
-                <th>Horas</th>
-                <th>Estado</th>
                 <th>Correlativas</th>
                 <th>Acciones</th>
               </tr>
@@ -275,16 +232,15 @@ const materiasAgrupadas = useMemo(() => {
             <tbody>
               {materiasAgrupadas.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="tabla-vacia">
+                  <td colSpan={4} className="tabla-vacia">
                     No se encontraron materias
                   </td>
                 </tr>
               ) : (
                 materiasAgrupadas.map(grupo => (
                   <React.Fragment key={grupo.periodo}>
-                    {/* Separador de período */}
                     <tr className="separador-periodo">
-                      <td colSpan={6}>
+                      <td colSpan={4}>
                         <div className="periodo-header">
                           <span className="periodo-label">{grupo.label}</span>
                           <span className="periodo-count">{grupo.materias.length} materias</span>
@@ -292,7 +248,6 @@ const materiasAgrupadas = useMemo(() => {
                       </td>
                     </tr>
                     
-                    {/* Materias del período */}
                     {grupo.materias.map(materia => (
                       <tr key={materia.codigo} className={`fila-materia ${getEstadoClass(materia.estado)}`}>
                         <td className="col-codigo">{materia.codigo}</td>
@@ -300,12 +255,6 @@ const materiasAgrupadas = useMemo(() => {
                           {materia.nombre}
                           {materia.esElectiva && <span className="badge-electiva">Electiva</span>}
                           {materia.esTransversal && <span className="badge-transversal">Transversal</span>}
-                        </td>
-                        <td className="col-horas">{materia.horasSemanales}h</td>
-                        <td className="col-estado">
-                          <span className={`badge-estado ${getEstadoClass(materia.estado)}`}>
-                            {getEstadoTexto(materia.estado)}
-                          </span>
                         </td>
                         <td className="col-correlativas">
                           {materia.correlativas.length === 0 ? (
@@ -327,6 +276,13 @@ const materiasAgrupadas = useMemo(() => {
                         <td className="col-acciones">
                           {materia.estado === 'disponible' && (
                             <>
+                            <button 
+                                onClick={() => cambiarEstado(materia.codigo, 'cursada')}
+                                className="btn-accion cursada"
+                                title="Marcar como cursada"
+                              >
+                                Cursada
+                              </button>
                               <button 
                                 onClick={() => cambiarEstado(materia.codigo, 'en_curso')}
                                 className="btn-accion en-curso"
@@ -334,13 +290,7 @@ const materiasAgrupadas = useMemo(() => {
                               >
                                 Cursando
                               </button>
-                              <button 
-                                onClick={() => cambiarEstado(materia.codigo, 'cursada')}
-                                className="btn-accion cursada"
-                                title="Marcar como cursada"
-                              >
-                                Cursada
-                              </button>
+                              
                             </>
                           )}
                           {materia.estado === 'en_curso' && (
@@ -379,7 +329,66 @@ const materiasAgrupadas = useMemo(() => {
             </tbody>
           </table>
         </div>
+
+         {/* Selector de años */}
+        <div className="selector-anos">
+          <h3>Seleccionar todas las materias de:</h3>
+          <div className="anos-checkboxes">
+            
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['1']}
+                onChange={() => toggleSeleccionAnio('1')}
+              />
+              <span>Primer Año</span>
+            </label>
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['2']}
+                onChange={() => toggleSeleccionAnio('2')}
+              />
+              <span>Segundo Año</span>
+            </label>
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['3']}
+                onChange={() => toggleSeleccionAnio('3')}
+              />
+              <span>Tercer Año</span>
+            </label>
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['4']}
+                onChange={() => toggleSeleccionAnio('4')}
+              />
+              <span>Cuarto Año</span>
+            </label>
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['5']}
+                onChange={() => toggleSeleccionAnio('5')}
+              />
+              <span>Quinto Año</span>
+            </label>
+            <label className="checkbox-ano">
+              <input 
+                type="checkbox"
+                checked={anosSeleccionados['TRANSVERSAL']}
+                onChange={() => toggleSeleccionAnio('TRANSVERSAL')}
+              />
+              <span>Transversales</span>
+            </label>
+          </div>
+        </div>
       </div>
+
+
+
     </div>
   );
 };
