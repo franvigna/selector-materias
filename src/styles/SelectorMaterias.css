@@ -79,7 +79,6 @@
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
   flex-shrink: 0;
 }
 
@@ -402,5 +401,39 @@
   .anos-checkboxes {
     flex-direction: column;
     gap: 1rem;
+  }
+}
+
+/* Primera sección combinada */
+.primera-seccion {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.primera-seccion .selector-anos-container {
+  height: 15vh;
+  flex-shrink: 0;
+}
+
+.grafo-section {
+    height: 85vh;
+    flex-shrink: 0;
+    overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+
+}
+
+@media (max-width: 768px) {
+  .primera-seccion .selector-anos-container {
+    height: 18vh;
+  }
+  
+  .grafo-section {
+    height: 82vh;
   }
 }

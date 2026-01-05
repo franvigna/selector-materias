@@ -4,6 +4,7 @@ import '../styles/SelectorMaterias.css';
 import Estadisticas from './Estadisticas';
 import RecomendadorMaterias from './RecomendadorMaterias';
 import GrafoPrecedencia from './GrafoPrecedencia';
+import SelectorAnios from './SelectorAnios';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
   return materiasJSON.map(materia => ({
@@ -161,29 +162,8 @@ const SelectorMaterias: React.FC = () => {
     }
   };
 
-  const toggleSeleccionAnio = (anio: string) => {
-    const nuevoEstado = !anosSeleccionados[anio];
-    setAnosSeleccionados(prev => ({ ...prev, [anio]: nuevoEstado }));
-
-    const materiasPorAnio = materiasConEstado.filter(m => {
-      if (anio === 'TRANSVERSAL') return m.periodo === 'TRANSVERSAL';
-      const anioMateria = m.periodo.charAt(2);
-      return anioMateria === anio;
-    });
-
-    if (nuevoEstado) {
-      materiasPorAnio.forEach(materia => {
-        if (materia.estado === 'disponible' || materia.estado === 'bloqueada') {
-          cambiarEstado(materia.codigo, 'cursada');
-        }
-      });
-    } else {
-      materiasPorAnio.forEach(materia => {
-        if (materia.estado === 'cursada' || materia.estado === 'en_curso') {
-          cambiarEstado(materia.codigo, 'disponible');
-        }
-      });
-    }
+  const handleToggleAnio = (anio: string) => {
+    setAnosSeleccionados(prev => ({ ...prev, [anio]: !prev[anio] }));
   };
 
   if (cargando) {
@@ -210,15 +190,25 @@ const SelectorMaterias: React.FC = () => {
 
   return (
     <>
-      {/* Primera sección - 100vh */}
+      {/* Primera sección - Selector de Años + Grafo - 100vh */}
+      <div className="primera-seccion">
+        <SelectorAnios
+          materiasConEstado={materiasConEstado}
+          anosSeleccionados={anosSeleccionados}
+          onToggleAnio={handleToggleAnio}
+          onCambiarEstado={cambiarEstado}
+        />
+        <div className="grafo-section">
+          <GrafoPrecedencia 
+            materiasConEstado={materiasConEstado}
+            onCambiarEstado={cambiarEstado}
+          />
+        </div>
+      </div>
+
+      {/* Segunda sección - Tabla de materias - 100vh */}
       <div className="selector-container">
         <div className="selector-wrapper">
-          <header className="selector-header">
-            <h1>Planificador de Carrera</h1>
-            <p>Ingeniería en Informática - UNLaM</p>
-          </header>
-
-          {/* Tabla de materias agrupadas por período */}
           <div className="tabla-container tabla-scroll">
             <table className="tabla-materias">
               <thead>
@@ -328,83 +318,22 @@ const SelectorMaterias: React.FC = () => {
               </tbody>
             </table>
           </div>
-
-          {/* Selector de años */}
-          <div className="selector-anos">
-            <h3>Seleccionar todas las materias de:</h3>
-            <div className="anos-checkboxes">
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['1']}
-                  onChange={() => toggleSeleccionAnio('1')}
-                />
-                <span>Primer Año</span>
-              </label>
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['2']}
-                  onChange={() => toggleSeleccionAnio('2')}
-                />
-                <span>Segundo Año</span>
-              </label>
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['3']}
-                  onChange={() => toggleSeleccionAnio('3')}
-                />
-                <span>Tercer Año</span>
-              </label>
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['4']}
-                  onChange={() => toggleSeleccionAnio('4')}
-                />
-                <span>Cuarto Año</span>
-              </label>
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['5']}
-                  onChange={() => toggleSeleccionAnio('5')}
-                />
-                <span>Quinto Año</span>
-              </label>
-              <label className="checkbox-ano">
-                <input
-                  type="checkbox"
-                  checked={anosSeleccionados['TRANSVERSAL']}
-                  onChange={() => toggleSeleccionAnio('TRANSVERSAL')}
-                />
-                <span>Transversales</span>
-              </label>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Segunda sección - Estadísticas - 100vh */}
+      {/* Tercera sección - Estadísticas - 100vh */}
       <Estadisticas
         materias={materiasConEstado}
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
       />
 
-      {/* Tercera sección - Recomendador - 100vh */}
+      {/* Cuarta sección - Recomendador - 100vh */}
       <RecomendadorMaterias
         materias={materias}
         materiasConEstado={materiasConEstado}
         materiasCursadas={materiasCursadas}
       />
-
-      {/* Cuarta sección - Grafo de Precedencia - 100vh */}
-<GrafoPrecedencia 
-  materiasConEstado={materiasConEstado}
-  onCambiarEstado={cambiarEstado}
-/>
     </>
   );
 };

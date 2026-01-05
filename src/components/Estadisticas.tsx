@@ -117,17 +117,7 @@ const Estadisticas: React.FC<EstadisticasProps> = ({
             <span className="stat-label">Bloqueadas</span>
           </div>
 
-          <div className="stat-card total">
-            <div className="stat-icon">📖</div>
-            <span className="stat-numero">{estadisticas.total}</span>
-            <span className="stat-label">Total de Materias</span>
-          </div>
 
-          <div className="stat-card horas">
-            <div className="stat-icon">⏰</div>
-            <span className="stat-numero">{estadisticas.horasCursadas}</span>
-            <span className="stat-label">Horas Cursadas de {estadisticas.horasTotales}</span>
-          </div>
         </div>
       </div>
     </div>

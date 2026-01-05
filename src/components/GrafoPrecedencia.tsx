@@ -102,7 +102,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
             ),
             estado: materia.estado,
             codigo: materia.codigo,
-            xOriginal: x // Guardamos la posición X original
+            xOriginal: x
           },
           className: nodeClass,
           sourcePosition: Position.Right,
@@ -111,7 +111,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
             border: `3px solid ${borderColor}`,
             borderRadius: '10px',
             padding: '12px',
-            width: 240,
+            width: 150,
             fontSize: '12px',
             cursor: materia.estado !== 'bloqueada' ? 'pointer' : 'not-allowed',
           }
@@ -122,7 +122,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     return nodes;
   }, [periodosOrdenados, materiasPorPeriodo, materiasConEstado]);
 
-  // Crear edges (conexiones) para ReactFlow - FLECHAS DIRECTAS
+  // Crear edges (conexiones) para ReactFlow
   const initialEdges: Edge[] = useMemo(() => {
     const edges: Edge[] = [];
 
@@ -155,22 +155,19 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   const [nodes, setNodes, onNodesChange] = useNodesState(createNodes());
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
 
-  // Actualizar nodos cuando cambia el estado de las materias
   useEffect(() => {
     setNodes(createNodes());
   }, [materiasConEstado, createNodes, setNodes]);
 
-  // Restringir movimiento solo vertical
   const onNodeDrag: NodeDragHandler = useCallback((_event, node) => {
     setNodes((nds) =>
       nds.map((n) => {
         if (n.id === node.id) {
-          // Mantener la posición X original, solo permitir cambio en Y
           return {
             ...n,
             position: {
-              x: n.data.xOriginal, // Mantener X fijo
-              y: node.position.y,  // Permitir cambio en Y
+              x: n.data.xOriginal,
+              y: node.position.y,
             },
           };
         }
@@ -179,17 +176,13 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     );
   }, [setNodes]);
 
-  // Manejar click en nodo
   const onNodeClick: NodeMouseHandler = useCallback((_event, node) => {
     const estado = node.data.estado as EstadoMateria;
     
-    // No hacer nada si está bloqueada
     if (estado === 'bloqueada') {
       return;
     }
 
-    // Ciclo de estados: disponible -> cursada -> disponible
-    // en_curso -> cursada -> disponible
     let nuevoEstado: EstadoMateria;
     
     if (estado === 'disponible') {
@@ -205,7 +198,6 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     onCambiarEstado(node.data.codigo, nuevoEstado);
   }, [onCambiarEstado]);
 
-  // Colores para el minimapa según el estado
   const nodeColor = (node: Node) => {
     if (node.className?.includes('cursada')) return '#81c784';
     if (node.className?.includes('en-curso')) return '#64b5f6';
@@ -215,57 +207,29 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   };
 
   return (
-    <div className="grafo-container">
-      <div className="grafo-wrapper">
-        <header className="grafo-header">
-          <h2>Grafo de Precedencia Interactivo</h2>
-          <p>Click en un nodo para cambiar estado • Arrastra verticalmente para reorganizar • Rueda del mouse para zoom</p>
-        </header>
-
-        <div className="reactflow-wrapper">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onNodeClick={onNodeClick}
-            onNodeDrag={onNodeDrag}
-            fitView
-            attributionPosition="bottom-left"
-            minZoom={0.1}
-            maxZoom={1.5}
-            defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
-          >
-            <Background color="#aaa" gap={16} />
-            <Controls />
-            <MiniMap 
-              nodeColor={nodeColor}
-              nodeStrokeWidth={3}
-              zoomable
-              pannable
-            />
-          </ReactFlow>
-        </div>
-
-        <div className="leyenda">
-          <div className="leyenda-item">
-            <div className="leyenda-box leyenda-cursada"></div>
-            <span>Cursada</span>
-          </div>
-          <div className="leyenda-item">
-            <div className="leyenda-box leyenda-en-curso"></div>
-            <span>En Curso</span>
-          </div>
-          <div className="leyenda-item">
-            <div className="leyenda-box leyenda-disponible"></div>
-            <span>Disponible</span>
-          </div>
-          <div className="leyenda-item">
-            <div className="leyenda-box leyenda-bloqueada"></div>
-            <span>Bloqueada</span>
-          </div>
-        </div>
-      </div>
+    <div className="grafo-container-solo">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onNodeClick={onNodeClick}
+        onNodeDrag={onNodeDrag}
+        fitView
+        attributionPosition="bottom-left"
+        minZoom={0.1}
+        maxZoom={1.5}
+        defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
+      >
+        <Background color="#aaa" gap={16} />
+        <Controls />
+        <MiniMap 
+          nodeColor={nodeColor}
+          nodeStrokeWidth={3}
+          zoomable
+          pannable
+        />
+      </ReactFlow>
     </div>
   );
 };
