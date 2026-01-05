@@ -208,7 +208,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
 
         onCambiarEstado(node.data.codigo, nuevoEstado);
         clickCount.current = 0;
-      }, 250);
+      }, 200);
     } else if (clickCount.current === 2) {
       // Es un doble click
       if (clickTimeout.current !== null) {

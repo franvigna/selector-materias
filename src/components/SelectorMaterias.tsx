@@ -4,7 +4,6 @@ import GrafoPrecedencia from './GrafoPrecedencia';
 import MenuLateral from './MenuLateral';
 import InfoSuperior from './InfoSuperior';
 import LeyendaInferior from './LeyendaInferior';
-import BotonRecomendador from './BotonRecomendador';
 import ModalRecomendador from './ModalRecomendador';
 import '../styles/SelectorMaterias.css';
 
@@ -68,7 +67,9 @@ const SelectorMaterias: React.FC = () => {
       }
 
       const tieneCorrelativas = materia.correlativas.every(
-        corrCodigo => materiasCursadas.includes(corrCodigo)
+        corrCodigo => 
+          materiasCursadas.includes(corrCodigo) || 
+          materiasEnCurso.includes(corrCodigo)
       );
 
       if (tieneCorrelativas) {
@@ -92,6 +93,24 @@ const SelectorMaterias: React.FC = () => {
 
   const handleToggleAnio = (anio: string) => {
     setAnosSeleccionados(prev => ({ ...prev, [anio]: !prev[anio] }));
+  };
+
+  const handleImportar = (cursadas: string[], enCurso: string[]) => {
+    setMateriasCursadas(cursadas);
+    setMateriasEnCurso(enCurso);
+  };
+
+  const handleLimpiarSeleccion = () => {
+    setMateriasCursadas([]);
+    setMateriasEnCurso([]);
+    setAnosSeleccionados({
+      '1': false,
+      '2': false,
+      '3': false,
+      '4': false,
+      '5': false,
+      'TRANSVERSAL': false
+    });
   };
 
   if (cargando) {
@@ -118,20 +137,27 @@ const SelectorMaterias: React.FC = () => {
         materiasConEstado={materiasConEstado}
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
-        anosSeleccionados={anosSeleccionados}
+        materias={materias}
         onCambiarEstado={cambiarEstado}
-        onToggleAnio={handleToggleAnio}
+        onImportar={handleImportar}
+        onAbrirRecomendador={() => setModalAbierto(true)}
       />
 
       <InfoSuperior
         materiasConEstado={materiasConEstado}
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
+        anosSeleccionados={anosSeleccionados}
+        onToggleAnio={handleToggleAnio}
+        onCambiarEstado={cambiarEstado}
+        onLimpiarSeleccion={handleLimpiarSeleccion}
       />
 
-      <LeyendaInferior />
-
-      <BotonRecomendador onClick={() => setModalAbierto(true)} />
+      <LeyendaInferior
+        materiasConEstado={materiasConEstado}
+        materiasCursadas={materiasCursadas}
+        materiasEnCurso={materiasEnCurso}
+      />
 
       <ModalRecomendador
         isOpen={modalAbierto}
