@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import type { Materia, MateriaJSON, EstadoMateria, MateriaConEstado, PeriodoInfo } from '../types/materia';
 import '../styles/SelectorMaterias.css';
+import Estadisticas from './Estadisticas';
+import RecomendadorMaterias from './RecomendadorMaterias';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
   return materiasJSON.map(materia => ({
@@ -13,9 +15,6 @@ const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
 const parsearPeriodo = (periodo: string): PeriodoInfo => {
   if (periodo === 'TRANSVERSAL') {
     return { cuatrimestre: 0, anio: 0, label: 'Materias Transversales' };
-  }
-  if (periodo === 'ELECTIVA') {
-    return { cuatrimestre: 0, anio: 0, label: 'Materias Electivas' };
   }
   
   const cuatrimestre = parseInt(periodo.charAt(0));
@@ -209,187 +208,197 @@ const SelectorMaterias: React.FC = () => {
   }
 
   return (
-    <div className="selector-container">
-      <div className="selector-wrapper">
-        <header className="selector-header">
-          <h1>Planificador de Carrera</h1>
-          <p>Ingenieria en Informática - UNLaM</p>
-        </header>
+    <>
+      {/* Primera sección - 100vh */}
+      <div className="selector-container">
+        <div className="selector-wrapper">
+          <header className="selector-header">
+            <h1>Planificador de Carrera</h1>
+            <p>Ingeniería en Informática - UNLaM</p>
+          </header>
 
-       
-
-        {/* Tabla de materias agrupadas por período */}
-        <div className="tabla-container tabla-scroll">
-          <table className="tabla-materias">
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Materia</th>
-                <th>Correlativas</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {materiasAgrupadas.length === 0 ? (
+          {/* Tabla de materias agrupadas por período */}
+          <div className="tabla-container tabla-scroll">
+            <table className="tabla-materias">
+              <thead>
                 <tr>
-                  <td colSpan={4} className="tabla-vacia">
-                    No se encontraron materias
-                  </td>
+                  <th>Código</th>
+                  <th>Materia</th>
+                  <th>Correlativas</th>
+                  <th>Acciones</th>
                 </tr>
-              ) : (
-                materiasAgrupadas.map(grupo => (
-                  <React.Fragment key={grupo.periodo}>
-                    <tr className="separador-periodo">
-                      <td colSpan={4}>
-                        <div className="periodo-header">
-                          <span className="periodo-label">{grupo.label}</span>
-                          <span className="periodo-count">{grupo.materias.length} materias</span>
-                        </div>
-                      </td>
-                    </tr>
-                    
-                    {grupo.materias.map(materia => (
-                      <tr key={materia.codigo} className={`fila-materia ${getEstadoClass(materia.estado)}`}>
-                        <td className="col-codigo">{materia.codigo}</td>
-                        <td className="col-nombre">
-                          {materia.nombre}
-                          {materia.esElectiva && <span className="badge-electiva">Electiva</span>}
-                          {materia.esTransversal && <span className="badge-transversal">Transversal</span>}
-                        </td>
-                        <td className="col-correlativas">
-                          {materia.correlativas.length === 0 ? (
-                            <span className="sin-correlativas">-</span>
-                          ) : materia.estado === 'bloqueada' ? (
-                            <div className="correlativas-faltantes">
-                              {materia.correlativas
-                                .filter(c => !materiasCursadas.includes(c))
-                                .map(c => (
-                                  <span key={c} className="correlativa-faltante" title={obtenerNombreMateria(c)}>
-                                    {c}
-                                  </span>
-                                ))}
-                            </div>
-                          ) : (
-                            <span className="correlativas-ok">✓ {materia.correlativas.length}</span>
-                          )}
-                        </td>
-                        <td className="col-acciones">
-                          {materia.estado === 'disponible' && (
-                            <>
-                            <button 
-                                onClick={() => cambiarEstado(materia.codigo, 'cursada')}
-                                className="btn-accion cursada"
-                                title="Marcar como cursada"
-                              >
-                                Cursada
-                              </button>
-                              <button 
-                                onClick={() => cambiarEstado(materia.codigo, 'en_curso')}
-                                className="btn-accion en-curso"
-                                title="Marcar como en curso"
-                              >
-                                Cursando
-                              </button>
-                              
-                            </>
-                          )}
-                          {materia.estado === 'en_curso' && (
-                            <>
-                              <button 
-                                onClick={() => cambiarEstado(materia.codigo, 'cursada')}
-                                className="btn-accion cursada"
-                              >
-                                Aprobar
-                              </button>
-                              <button 
-                                onClick={() => cambiarEstado(materia.codigo, 'disponible')}
-                                className="btn-accion cancelar"
-                              >
-                                Cancelar
-                              </button>
-                            </>
-                          )}
-                          {materia.estado === 'cursada' && (
-                            <button 
-                              onClick={() => cambiarEstado(materia.codigo, 'disponible')}
-                              className="btn-accion desmarcar"
-                            >
-                              Desmarcar
-                            </button>
-                          )}
-                          {materia.estado === 'bloqueada' && (
-                            <span className="texto-bloqueada">Falta correlativas</span>
-                          )}
+              </thead>
+              <tbody>
+                {materiasAgrupadas.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="tabla-vacia">
+                      No se encontraron materias
+                    </td>
+                  </tr>
+                ) : (
+                  materiasAgrupadas.map(grupo => (
+                    <React.Fragment key={grupo.periodo}>
+                      <tr className="separador-periodo">
+                        <td colSpan={4}>
+                          <div className="periodo-header">
+                            <span className="periodo-label">{grupo.label}</span>
+                            <span className="periodo-count">{grupo.materias.length} materias</span>
+                          </div>
                         </td>
                       </tr>
-                    ))}
-                  </React.Fragment>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                      
+                      {grupo.materias.map(materia => (
+                        <tr key={materia.codigo} className={`fila-materia ${getEstadoClass(materia.estado)}`}>
+                          <td className="col-codigo">{materia.codigo}</td>
+                          <td className="col-nombre">
+                            {materia.nombre}
+                            {materia.esElectiva && <span className="badge-electiva">Electiva</span>}
+                            {materia.esTransversal && <span className="badge-transversal">Transversal</span>}
+                          </td>
+                          <td className="col-correlativas">
+                            {materia.correlativas.length === 0 ? (
+                              <span className="sin-correlativas">-</span>
+                            ) : materia.estado === 'bloqueada' ? (
+                              <div className="correlativas-faltantes">
+                                {materia.correlativas
+                                  .filter(c => !materiasCursadas.includes(c))
+                                  .map(c => (
+                                    <span key={c} className="correlativa-faltante" title={obtenerNombreMateria(c)}>
+                                      {c}
+                                    </span>
+                                  ))}
+                              </div>
+                            ) : (
+                              <span className="correlativas-ok">✓ {materia.correlativas.length}</span>
+                            )}
+                          </td>
+                          <td className="col-acciones">
+                            {materia.estado === 'disponible' && (
+                              <>
+                                <button 
+                                  onClick={() => cambiarEstado(materia.codigo, 'cursada')}
+                                  className="btn-accion cursada"
+                                  title="Marcar como cursada"
+                                >
+                                  Cursada
+                                </button>
+                                <button 
+                                  onClick={() => cambiarEstado(materia.codigo, 'en_curso')}
+                                  className="btn-accion en-curso"
+                                  title="Marcar como en curso"
+                                >
+                                  Cursando
+                                </button>
+                              </>
+                            )}
+                            {materia.estado === 'en_curso' && (
+                              <>
+                                <button 
+                                  onClick={() => cambiarEstado(materia.codigo, 'cursada')}
+                                  className="btn-accion cursada"
+                                >
+                                  Aprobar
+                                </button>
+                                <button 
+                                  onClick={() => cambiarEstado(materia.codigo, 'disponible')}
+                                  className="btn-accion cancelar"
+                                >
+                                  Cancelar
+                                </button>
+                              </>
+                            )}
+                            {materia.estado === 'cursada' && (
+                              <button 
+                                onClick={() => cambiarEstado(materia.codigo, 'disponible')}
+                                className="btn-accion desmarcar"
+                              >
+                                Desmarcar
+                              </button>
+                            )}
+                            {materia.estado === 'bloqueada' && (
+                              <span className="texto-bloqueada">Falta correlativas</span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </React.Fragment>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
 
-         {/* Selector de años */}
-        <div className="selector-anos">
-          <h3>Seleccionar todas las materias de:</h3>
-          <div className="anos-checkboxes">
-            
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['1']}
-                onChange={() => toggleSeleccionAnio('1')}
-              />
-              <span>Primer Año</span>
-            </label>
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['2']}
-                onChange={() => toggleSeleccionAnio('2')}
-              />
-              <span>Segundo Año</span>
-            </label>
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['3']}
-                onChange={() => toggleSeleccionAnio('3')}
-              />
-              <span>Tercer Año</span>
-            </label>
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['4']}
-                onChange={() => toggleSeleccionAnio('4')}
-              />
-              <span>Cuarto Año</span>
-            </label>
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['5']}
-                onChange={() => toggleSeleccionAnio('5')}
-              />
-              <span>Quinto Año</span>
-            </label>
-            <label className="checkbox-ano">
-              <input 
-                type="checkbox"
-                checked={anosSeleccionados['TRANSVERSAL']}
-                onChange={() => toggleSeleccionAnio('TRANSVERSAL')}
-              />
-              <span>Transversales</span>
-            </label>
+          {/* Selector de años */}
+          <div className="selector-anos">
+            <h3>Seleccionar todas las materias de:</h3>
+            <div className="anos-checkboxes">
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['1']}
+                  onChange={() => toggleSeleccionAnio('1')}
+                />
+                <span>Primer Año</span>
+              </label>
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['2']}
+                  onChange={() => toggleSeleccionAnio('2')}
+                />
+                <span>Segundo Año</span>
+              </label>
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['3']}
+                  onChange={() => toggleSeleccionAnio('3')}
+                />
+                <span>Tercer Año</span>
+              </label>
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['4']}
+                  onChange={() => toggleSeleccionAnio('4')}
+                />
+                <span>Cuarto Año</span>
+              </label>
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['5']}
+                  onChange={() => toggleSeleccionAnio('5')}
+                />
+                <span>Quinto Año</span>
+              </label>
+              <label className="checkbox-ano">
+                <input 
+                  type="checkbox"
+                  checked={anosSeleccionados['TRANSVERSAL']}
+                  onChange={() => toggleSeleccionAnio('TRANSVERSAL')}
+                />
+                <span>Transversales</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
 
+      {/* Segunda sección - Estadísticas - 100vh */}
+      <Estadisticas 
+        materias={materiasConEstado}
+        materiasCursadas={materiasCursadas}
+        materiasEnCurso={materiasEnCurso}
+      />
 
-
-    </div>
+      {/* Tercera sección - Recomendador - 100vh */}
+      <RecomendadorMaterias 
+        materias={materias}
+        materiasConEstado={materiasConEstado}
+        materiasCursadas={materiasCursadas}
+      />
+    </>
   );
 };
 

@@ -1,0 +1,240 @@
+.estadisticas-container {
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.estadisticas-wrapper {
+  width: 90%;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.estadisticas-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.estadisticas-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.estadisticas-header p {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  flex: 1;
+  align-content: center;
+}
+
+/* Card grande de progreso */
+.stat-card-large {
+  grid-column: span 2;
+  background: white;
+  padding: 1.25rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-card-large h3 {
+  font-size: 1.1rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.progress-circle {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 1rem;
+}
+
+.progress-circle svg {
+  transform: rotate(-90deg);
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.progress-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #7e57c2;
+}
+
+.progress-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #718096;
+  margin-top: 0.25rem;
+}
+
+.progress-details {
+  display: flex;
+  gap: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail-number {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: #718096;
+  margin-top: 0.25rem;
+}
+
+/* Cards secundarias */
+.stat-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-left: 4px solid;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card.cursada {
+  border-color: #81c784;
+}
+
+.stat-card.en-curso {
+  border-color: #64b5f6;
+}
+
+.stat-card.disponible {
+  border-color: #ffd54f;
+}
+
+.stat-card.bloqueada {
+  border-color: #e57373;
+}
+
+.stat-card.total {
+  border-color: #9575cd;
+}
+
+.stat-card.horas {
+  border-color: #4db6ac;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-numero {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-card.cursada .stat-numero {
+  color: #66bb6a;
+}
+
+.stat-card.en-curso .stat-numero {
+  color: #42a5f5;
+}
+
+.stat-card.disponible .stat-numero {
+  color: #ffca28;
+}
+
+.stat-card.bloqueada .stat-numero {
+  color: #ef5350;
+}
+
+.stat-card.total .stat-numero {
+  color: #7e57c2;
+}
+
+.stat-card.horas .stat-numero {
+  color: #26a69a;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #718096;
+  font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .stat-card-large {
+    grid-column: span 1;
+  }
+  
+  .progress-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .progress-number {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .estadisticas-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .stat-numero {
+    font-size: 1.75rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.75rem;
+  }
+}
