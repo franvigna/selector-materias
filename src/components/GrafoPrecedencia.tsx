@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react';
+import React, { useMemo, useCallback, useEffect, useRef } from 'react';
 import ReactFlow, {
   type Node,
   type Edge,
@@ -25,6 +25,9 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   materiasConEstado,
   onCambiarEstado
 }) => {
+  const clickTimeout = useRef<number | null>(null);
+  const clickCount = useRef(0);
+
   // Agrupar materias por período
   const materiasPorPeriodo = useMemo(() => {
     const grupos: { [key: string]: MateriaConEstado[] } = {};
@@ -61,7 +64,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   const createNodes = useCallback(() => {
     const nodes: Node[] = [];
     const xSpacing = 300;
-    const ySpacing = 120;
+    const ySpacing = 150;
 
     periodosOrdenados.forEach((periodo, periodoIdx) => {
       materiasPorPeriodo[periodo].forEach((materia, materiaIdx) => {
@@ -111,7 +114,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
             border: `3px solid ${borderColor}`,
             borderRadius: '10px',
             padding: '12px',
-            width: 150,
+            width: 175,
             fontSize: '12px',
             cursor: materia.estado !== 'bloqueada' ? 'pointer' : 'not-allowed',
           }
@@ -176,26 +179,57 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     );
   }, [setNodes]);
 
+  // Manejar click y doble click
   const onNodeClick: NodeMouseHandler = useCallback((_event, node) => {
     const estado = node.data.estado as EstadoMateria;
     
+    // No hacer nada si está bloqueada
     if (estado === 'bloqueada') {
       return;
     }
 
-    let nuevoEstado: EstadoMateria;
-    
-    if (estado === 'disponible') {
-      nuevoEstado = 'cursada';
-    } else if (estado === 'cursada') {
-      nuevoEstado = 'disponible';
-    } else if (estado === 'en_curso') {
-      nuevoEstado = 'cursada';
-    } else {
-      nuevoEstado = 'disponible';
-    }
+    clickCount.current += 1;
 
-    onCambiarEstado(node.data.codigo, nuevoEstado);
+    if (clickCount.current === 1) {
+      // Esperar para ver si es un doble click
+      clickTimeout.current = window.setTimeout(() => {
+        // Es un click simple
+        let nuevoEstado: EstadoMateria;
+        
+        if (estado === 'disponible') {
+          nuevoEstado = 'cursada';
+        } else if (estado === 'cursada') {
+          nuevoEstado = 'disponible';
+        } else if (estado === 'en_curso') {
+          nuevoEstado = 'cursada';
+        } else {
+          nuevoEstado = 'disponible';
+        }
+
+        onCambiarEstado(node.data.codigo, nuevoEstado);
+        clickCount.current = 0;
+      }, 250);
+    } else if (clickCount.current === 2) {
+      // Es un doble click
+      if (clickTimeout.current !== null) {
+        window.clearTimeout(clickTimeout.current);
+      }
+      
+      let nuevoEstado: EstadoMateria;
+      
+      if (estado === 'disponible') {
+        nuevoEstado = 'en_curso';
+      } else if (estado === 'cursada') {
+        nuevoEstado = 'en_curso';
+      } else if (estado === 'en_curso') {
+        nuevoEstado = 'disponible';
+      } else {
+        nuevoEstado = 'en_curso';
+      }
+
+      onCambiarEstado(node.data.codigo, nuevoEstado);
+      clickCount.current = 0;
+    }
   }, [onCambiarEstado]);
 
   const nodeColor = (node: Node) => {

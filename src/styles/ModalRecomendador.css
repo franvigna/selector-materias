@@ -1,0 +1,302 @@
+/* Overlay del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1100;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Contenedor del modal */
+.modal-recomendador {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  z-index: 1101;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Header del modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  flex-shrink: 0;
+}
+
+.modal-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.modal-header p {
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.modal-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: rotate(90deg);
+}
+
+/* Contenido del modal */
+.modal-contenido {
+  flex: 1;
+  overflow: hidden;
+  padding: 1.5rem;
+}
+
+.tabla-wrapper {
+  height: 100%;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.tabla-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-thumb {
+  background: #f5576c;
+  border-radius: 10px;
+}
+
+.tabla-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #f093fb;
+}
+
+/* Tabla */
+.tabla-distancias {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-distancias thead {
+  background: #667eea;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tabla-distancias th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-distancias tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+  transition: background 0.2s;
+}
+
+.tabla-distancias tbody tr:hover {
+  background: #f7fafc;
+}
+
+.tabla-distancias td {
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.col-codigo {
+  font-weight: 700;
+  color: #4a5568;
+  font-family: 'Courier New', monospace;
+}
+
+.col-nombre {
+  font-weight: 500;
+  color: #2d3748;
+  max-width: 400px;
+}
+
+.fila-cursada {
+  background: #e8f5e9;
+}
+
+.fila-en_curso {
+  background: #e3f2fd;
+}
+
+.fila-disponible {
+  background: #fff9c4;
+}
+
+.fila-bloqueada {
+  background: #ffebee;
+  opacity: 0.7;
+}
+
+.badge-estado {
+  display: inline-block;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.badge-estado.cursada {
+  background: #a5d6a7;
+  color: #2e7d32;
+}
+
+.badge-estado.en_curso {
+  background: #90caf9;
+  color: #1565c0;
+}
+
+.badge-estado.disponible {
+  background: #fff176;
+  color: #f57f17;
+}
+
+.badge-estado.bloqueada {
+  background: #ef9a9a;
+  color: #c62828;
+}
+
+.col-distancia {
+  text-align: center;
+}
+
+.distancia-numero {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  display: inline-block;
+  min-width: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-recomendador {
+    width: 95%;
+    height: 90vh;
+  }
+
+  .modal-header {
+    padding: 1.5rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .modal-close {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+
+  .modal-contenido {
+    padding: 1rem;
+  }
+
+  .tabla-distancias th,
+  .tabla-distancias td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .distancia-numero {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mensaje cuando no hay materias pendientes */
+.sin-materias {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #4a5568;
+}
+
+.sin-materias-icono {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.sin-materias h3 {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.sin-materias p {
+  font-size: 1.1rem;
+  color: #718096;
+}

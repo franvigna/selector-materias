@@ -1,8 +1,8 @@
 /* Botón flotante */
 .menu-toggle {
   position: fixed;
-  top: 5.5rem; /* Ajustado para estar debajo de la barra superior */
-  left: 2rem;
+  top: 4rem; /* Ajustado para estar debajo de la barra superior */
+  left: 3rem;
   z-index: 1001;
   width: 60px;
   height: 60px;

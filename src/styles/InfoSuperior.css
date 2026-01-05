@@ -126,54 +126,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Leyenda de colores */
-.leyenda-colores {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.leyenda-item-compacto {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.color-box {
-  width: 20px;
-  height: 14px;
-  border-radius: 4px;
-  border: 2px solid;
-  flex-shrink: 0;
-}
-
-.color-box.cursada {
-  background: #e8f5e9;
-  border-color: #81c784;
-}
-
-.color-box.en-curso {
-  background: #e3f2fd;
-  border-color: #64b5f6;
-}
-
-.color-box.disponible {
-  background: #fff9c4;
-  border-color: #ffd54f;
-}
-
-.color-box.bloqueada {
-  background: #ffebee;
-  border-color: #e57373;
-}
-
-.leyenda-item-compacto span {
-  font-weight: 600;
-  color: #2d3748;
-  font-size: 0.8rem;
-  white-space: nowrap;
-}
-
 /* Responsive */
 @media (max-width: 1400px) {
   .info-contenedor {
@@ -186,10 +138,6 @@
 
   .estadisticas-estados {
     gap: 1.5rem;
-  }
-
-  .leyenda-colores {
-    gap: 1rem;
   }
 }
 
@@ -219,8 +167,7 @@
   }
 
   .info-general,
-  .estadisticas-estados,
-  .leyenda-colores {
+  .estadisticas-estados {
     width: 100%;
     justify-content: center;
   }
@@ -246,11 +193,5 @@
 
   .estado-label {
     font-size: 0.65rem;
-  }
-
-  .leyenda-colores {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
   }
 }

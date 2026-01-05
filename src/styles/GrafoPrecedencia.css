@@ -32,11 +32,11 @@
 }
 
 .nodo-nombre {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #2d3748;
-  line-height: 1.3;
-  text-align: center;
+  font-size: 1.2rem;
+    font-weight: 500;
+    color: #2d3748;
+    line-height: 1;
+    text-align: center; 
 }
 
 /* Colores por estado */

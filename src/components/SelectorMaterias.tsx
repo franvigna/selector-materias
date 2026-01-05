@@ -3,6 +3,9 @@ import type { Materia, MateriaJSON, EstadoMateria, MateriaConEstado } from '../t
 import GrafoPrecedencia from './GrafoPrecedencia';
 import MenuLateral from './MenuLateral';
 import InfoSuperior from './InfoSuperior';
+import LeyendaInferior from './LeyendaInferior';
+import BotonRecomendador from './BotonRecomendador';
+import ModalRecomendador from './ModalRecomendador';
 import '../styles/SelectorMaterias.css';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
@@ -19,6 +22,7 @@ const SelectorMaterias: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [materiasCursadas, setMateriasCursadas] = useState<string[]>([]);
   const [materiasEnCurso, setMateriasEnCurso] = useState<string[]>([]);
+  const [modalAbierto, setModalAbierto] = useState<boolean>(false);
   const [anosSeleccionados, setAnosSeleccionados] = useState<{ [key: string]: boolean }>({
     '1': false,
     '2': false,
@@ -118,14 +122,26 @@ const SelectorMaterias: React.FC = () => {
         onCambiarEstado={cambiarEstado}
         onToggleAnio={handleToggleAnio}
       />
-      
+
       <InfoSuperior
         materiasConEstado={materiasConEstado}
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
       />
-      
-      <GrafoPrecedencia 
+
+      <LeyendaInferior />
+
+      <BotonRecomendador onClick={() => setModalAbierto(true)} />
+
+      <ModalRecomendador
+        isOpen={modalAbierto}
+        onClose={() => setModalAbierto(false)}
+        materias={materias}
+        materiasConEstado={materiasConEstado}
+        materiasCursadas={materiasCursadas}
+      />
+
+      <GrafoPrecedencia
         materiasConEstado={materiasConEstado}
         onCambiarEstado={cambiarEstado}
       />

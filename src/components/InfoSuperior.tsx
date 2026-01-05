@@ -62,29 +62,6 @@ const InfoSuperior: React.FC<InfoSuperiorProps> = ({
             <span className="estado-label">Bloqueadas</span>
           </div>
         </div>
-
-        {/* Separador visual */}
-        <div className="separador-vertical"></div>
-
-        {/* Leyenda de colores */}
-        <div className="leyenda-colores">
-          <div className="leyenda-item-compacto">
-            <div className="color-box cursada"></div>
-            <span>Aprobada</span>
-          </div>
-          <div className="leyenda-item-compacto">
-            <div className="color-box en-curso"></div>
-            <span>En Curso</span>
-          </div>
-          <div className="leyenda-item-compacto">
-            <div className="color-box disponible"></div>
-            <span>Disponible</span>
-          </div>
-          <div className="leyenda-item-compacto">
-            <div className="color-box bloqueada"></div>
-            <span>Bloqueada</span>
-          </div>
-        </div>
       </div>
     </div>
   );
