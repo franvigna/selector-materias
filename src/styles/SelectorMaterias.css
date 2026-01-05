@@ -437,3 +437,56 @@
     height: 82vh;
   }
 }
+
+/* Pantalla completa */
+.app-pantalla-completa {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.pantalla-completa {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.pantalla-completa.loading h2 {
+  color: white;
+  font-size: 2rem;
+}
+
+.pantalla-completa.error {
+  background: #ffebee;
+}
+
+.pantalla-completa.error h2 {
+  color: #c62828;
+  margin-bottom: 1rem;
+}
+
+.pantalla-completa.error p {
+  color: #4a5568;
+  margin-bottom: 1.5rem;
+}
+
+.pantalla-completa.error button {
+  padding: 0.75rem 2rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pantalla-completa.error button:hover {
+  background: #764ba2;
+  transform: translateY(-2px);
+}

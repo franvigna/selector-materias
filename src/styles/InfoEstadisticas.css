@@ -1,0 +1,110 @@
+.info-estadisticas-flotante {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 100;
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.estadisticas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 12px;
+  min-width: 100px;
+  transition: all 0.3s ease;
+  border: 2px solid;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-box.cursada {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-color: #81c784;
+}
+
+.stat-box.en-curso {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-color: #64b5f6;
+}
+
+.stat-box.disponible {
+  background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%);
+  border-color: #ffd54f;
+}
+
+.stat-box.bloqueada {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-color: #e57373;
+}
+
+.stat-valor {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-texto {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .info-estadisticas-flotante {
+    top: auto;
+    bottom: 2rem;
+    right: 1rem;
+    left: 1rem;
+    padding: 1rem;
+  }
+
+  .estadisticas-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+  }
+
+  .stat-box {
+    padding: 0.75rem 0.5rem;
+    min-width: auto;
+  }
+
+  .stat-valor {
+    font-size: 1.5rem;
+  }
+
+  .stat-texto {
+    font-size: 0.65rem;
+  }
+}

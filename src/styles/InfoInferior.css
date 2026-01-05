@@ -1,0 +1,144 @@
+.info-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 3px solid #667eea;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.info-card {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-label {
+  font-size: 0.9rem;
+  color: #4a5568;
+  font-weight: 600;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  color: #2d3748;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.leyenda-estados {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.leyenda-estados h4 {
+  font-size: 0.9rem;
+  color: #2d3748;
+  font-weight: 700;
+  margin: 0;
+}
+
+.leyenda-items {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.color-box {
+  width: 24px;
+  height: 16px;
+  border-radius: 4px;
+  border: 2px solid;
+}
+
+.color-box.cursada {
+  background: #e8f5e9;
+  border-color: #81c784;
+}
+
+.color-box.en-curso {
+  background: #e3f2fd;
+  border-color: #64b5f6;
+}
+
+.color-box.disponible {
+  background: #fff9c4;
+  border-color: #ffd54f;
+}
+
+.color-box.bloqueada {
+  background: #ffebee;
+  border-color: #e57373;
+}
+
+.leyenda-item span {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .info-inferior {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .info-card {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .info-item {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .leyenda-estados {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .leyenda-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+  }
+}
