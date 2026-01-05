@@ -3,6 +3,7 @@ import type { Materia, MateriaJSON, EstadoMateria, MateriaConEstado, PeriodoInfo
 import '../styles/SelectorMaterias.css';
 import Estadisticas from './Estadisticas';
 import RecomendadorMaterias from './RecomendadorMaterias';
+import GrafoPrecedencia from './GrafoPrecedencia';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
   return materiasJSON.map(materia => ({
@@ -16,13 +17,13 @@ const parsearPeriodo = (periodo: string): PeriodoInfo => {
   if (periodo === 'TRANSVERSAL') {
     return { cuatrimestre: 0, anio: 0, label: 'Materias Transversales' };
   }
-  
+
   const cuatrimestre = parseInt(periodo.charAt(0));
   const anio = parseInt(periodo.charAt(2));
-  return { 
-    cuatrimestre, 
-    anio, 
-    label: `${anio}° Año - ${cuatrimestre}° Cuatrimestre` 
+  return {
+    cuatrimestre,
+    anio,
+    label: `${anio}° Año - ${cuatrimestre}° Cuatrimestre`
   };
 };
 
@@ -33,7 +34,7 @@ const SelectorMaterias: React.FC = () => {
   const [materiasCursadas, setMateriasCursadas] = useState<string[]>([]);
   const [materiasEnCurso, setMateriasEnCurso] = useState<string[]>([]);
   const [busqueda, _] = useState<string>('');
-  const [anosSeleccionados, setAnosSeleccionados] = useState<{[key: string]: boolean}>({
+  const [anosSeleccionados, setAnosSeleccionados] = useState<{ [key: string]: boolean }>({
     '1': false,
     '2': false,
     '3': false,
@@ -47,11 +48,11 @@ const SelectorMaterias: React.FC = () => {
       try {
         setCargando(true);
         const response = await fetch('/data/materias.json');
-        
+
         if (!response.ok) {
           throw new Error('Error al cargar las materias');
         }
-        
+
         const data: MateriaJSON[] = await response.json();
         const materiasProcessadas = procesarMaterias(data);
         setMaterias(materiasProcessadas);
@@ -93,7 +94,7 @@ const SelectorMaterias: React.FC = () => {
     if (!busqueda) return materiasConEstado;
 
     const busquedaLower = busqueda.toLowerCase();
-    return materiasConEstado.filter(m => 
+    return materiasConEstado.filter(m =>
       m.nombre.toLowerCase().includes(busquedaLower) ||
       m.codigo.includes(busqueda)
     );
@@ -101,7 +102,7 @@ const SelectorMaterias: React.FC = () => {
 
   const materiasAgrupadas = useMemo(() => {
     const grupos: { [key: string]: MateriaConEstado[] } = {};
-    
+
     materiasFiltradas.forEach(materia => {
       if (!grupos[materia.periodo]) {
         grupos[materia.periodo] = [];
@@ -114,16 +115,16 @@ const SelectorMaterias: React.FC = () => {
       if (b === 'TRANSVERSAL') return 1;
       if (a === 'ELECTIVA') return 1;
       if (b === 'ELECTIVA') return 1;
-      
+
       const anioA = parseInt(a.charAt(2));
       const anioB = parseInt(b.charAt(2));
       const cuatrimestreA = parseInt(a.charAt(0));
       const cuatrimestreB = parseInt(b.charAt(0));
-      
+
       if (anioA !== anioB) {
         return anioA - anioB;
       }
-      
+
       return cuatrimestreA - cuatrimestreB;
     });
 
@@ -162,7 +163,7 @@ const SelectorMaterias: React.FC = () => {
 
   const toggleSeleccionAnio = (anio: string) => {
     const nuevoEstado = !anosSeleccionados[anio];
-    setAnosSeleccionados(prev => ({...prev, [anio]: nuevoEstado}));
+    setAnosSeleccionados(prev => ({ ...prev, [anio]: nuevoEstado }));
 
     const materiasPorAnio = materiasConEstado.filter(m => {
       if (anio === 'TRANSVERSAL') return m.periodo === 'TRANSVERSAL';
@@ -246,7 +247,7 @@ const SelectorMaterias: React.FC = () => {
                           </div>
                         </td>
                       </tr>
-                      
+
                       {grupo.materias.map(materia => (
                         <tr key={materia.codigo} className={`fila-materia ${getEstadoClass(materia.estado)}`}>
                           <td className="col-codigo">{materia.codigo}</td>
@@ -275,14 +276,14 @@ const SelectorMaterias: React.FC = () => {
                           <td className="col-acciones">
                             {materia.estado === 'disponible' && (
                               <>
-                                <button 
+                                <button
                                   onClick={() => cambiarEstado(materia.codigo, 'cursada')}
                                   className="btn-accion cursada"
                                   title="Marcar como cursada"
                                 >
                                   Cursada
                                 </button>
-                                <button 
+                                <button
                                   onClick={() => cambiarEstado(materia.codigo, 'en_curso')}
                                   className="btn-accion en-curso"
                                   title="Marcar como en curso"
@@ -293,13 +294,13 @@ const SelectorMaterias: React.FC = () => {
                             )}
                             {materia.estado === 'en_curso' && (
                               <>
-                                <button 
+                                <button
                                   onClick={() => cambiarEstado(materia.codigo, 'cursada')}
                                   className="btn-accion cursada"
                                 >
                                   Aprobar
                                 </button>
-                                <button 
+                                <button
                                   onClick={() => cambiarEstado(materia.codigo, 'disponible')}
                                   className="btn-accion cancelar"
                                 >
@@ -308,7 +309,7 @@ const SelectorMaterias: React.FC = () => {
                               </>
                             )}
                             {materia.estado === 'cursada' && (
-                              <button 
+                              <button
                                 onClick={() => cambiarEstado(materia.codigo, 'disponible')}
                                 className="btn-accion desmarcar"
                               >
@@ -333,7 +334,7 @@ const SelectorMaterias: React.FC = () => {
             <h3>Seleccionar todas las materias de:</h3>
             <div className="anos-checkboxes">
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['1']}
                   onChange={() => toggleSeleccionAnio('1')}
@@ -341,7 +342,7 @@ const SelectorMaterias: React.FC = () => {
                 <span>Primer Año</span>
               </label>
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['2']}
                   onChange={() => toggleSeleccionAnio('2')}
@@ -349,7 +350,7 @@ const SelectorMaterias: React.FC = () => {
                 <span>Segundo Año</span>
               </label>
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['3']}
                   onChange={() => toggleSeleccionAnio('3')}
@@ -357,7 +358,7 @@ const SelectorMaterias: React.FC = () => {
                 <span>Tercer Año</span>
               </label>
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['4']}
                   onChange={() => toggleSeleccionAnio('4')}
@@ -365,7 +366,7 @@ const SelectorMaterias: React.FC = () => {
                 <span>Cuarto Año</span>
               </label>
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['5']}
                   onChange={() => toggleSeleccionAnio('5')}
@@ -373,7 +374,7 @@ const SelectorMaterias: React.FC = () => {
                 <span>Quinto Año</span>
               </label>
               <label className="checkbox-ano">
-                <input 
+                <input
                   type="checkbox"
                   checked={anosSeleccionados['TRANSVERSAL']}
                   onChange={() => toggleSeleccionAnio('TRANSVERSAL')}
@@ -386,18 +387,24 @@ const SelectorMaterias: React.FC = () => {
       </div>
 
       {/* Segunda sección - Estadísticas - 100vh */}
-      <Estadisticas 
+      <Estadisticas
         materias={materiasConEstado}
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
       />
 
       {/* Tercera sección - Recomendador - 100vh */}
-      <RecomendadorMaterias 
+      <RecomendadorMaterias
         materias={materias}
         materiasConEstado={materiasConEstado}
         materiasCursadas={materiasCursadas}
       />
+
+      {/* Cuarta sección - Grafo de Precedencia - 100vh */}
+<GrafoPrecedencia 
+  materiasConEstado={materiasConEstado}
+  onCambiarEstado={cambiarEstado}
+/>
     </>
   );
 };
