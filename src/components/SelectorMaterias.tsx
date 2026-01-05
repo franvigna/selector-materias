@@ -5,6 +5,7 @@ import MenuLateral from './MenuLateral';
 import InfoSuperior from './InfoSuperior';
 import LeyendaInferior from './LeyendaInferior';
 import ModalRecomendador from './ModalRecomendador';
+import MarcaAgua from './MarcaAgua';
 import '../styles/SelectorMaterias.css';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
@@ -158,6 +159,8 @@ const SelectorMaterias: React.FC = () => {
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
       />
+
+      <MarcaAgua />
 
       <ModalRecomendador
         isOpen={modalAbierto}
