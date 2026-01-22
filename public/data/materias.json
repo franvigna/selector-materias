@@ -149,7 +149,7 @@
   {
     "codigo": "3641",
     "nombre": "Bases de Datos Aplicada",
-    "correlativas": ["3636"],
+    "correlativas": ["3635", "3636"],
     "horasSemanales": 4,
     "periodo": "2C2A"
   },
@@ -163,7 +163,7 @@
   {
     "codigo": "3643",
     "nombre": "Redes de Computadoras",
-    "correlativas": ["3638", "3634"],
+    "correlativas": ["3638"],
     "horasSemanales": 4,
     "periodo": "2C2A"
   },
@@ -205,14 +205,14 @@
   {
     "codigo": "3648",
     "nombre": "Diseño de Software",
-    "correlativas": ["3642", "3636"],
+    "correlativas": ["3635", "3636", "3642"],
     "horasSemanales": 4,
     "periodo": "1C3A"
   },
   {
     "codigo": "3649",
     "nombre": "Sistemas Operativos",
-    "correlativas": ["3638"],
+    "correlativas": ["3629", "3638"],
     "horasSemanales": 4,
     "periodo": "1C3A"
   },
@@ -226,7 +226,7 @@
   {
     "codigo": "3675",
     "nombre": "Práctica Profesional Supervisada",
-    "correlativas": ["3642"],
+    "correlativas": ["3636", "3640", "3642"],
     "horasSemanales": 4,
     "periodo": "1C3A"
   },
@@ -254,7 +254,7 @@
   {
     "codigo": "3654",
     "nombre": "Virtualización de Hardware",
-    "correlativas": ["3649", "3645", "3640"],
+    "correlativas": ["3643", "3649"],
     "horasSemanales": 4,
     "periodo": "2C3A"
   },
@@ -268,7 +268,7 @@
   {
     "codigo": "3656",
     "nombre": "Estadística Aplicada",
-    "correlativas": ["3651", "3641"],
+    "correlativas": ["3651"],
     "horasSemanales": 4,
     "periodo": "1C4A"
   },
@@ -282,21 +282,21 @@
   {
     "codigo": "3658",
     "nombre": "Programación Concurrente",
-    "correlativas": ["3654", "3646"],
+    "correlativas": ["3646", "3649"],
     "horasSemanales": 4,
     "periodo": "1C4A"
   },
   {
     "codigo": "3659",
     "nombre": "Gestión Aplicada al Desarrollo de Software I",
-    "correlativas": ["3653", "3647", "3644"],
+    "correlativas": ["3644", "3647", "3648"],
     "horasSemanales": 4,
     "periodo": "1C4A"
   },
   {
     "codigo": "3660",
     "nombre": "Sistemas Operativos Avanzados",
-    "correlativas": ["3654"],
+    "correlativas": ["3634", "3654"],
     "horasSemanales": 4,
     "periodo": "1C4A"
   },
@@ -331,7 +331,7 @@
   {
     "codigo": "3665",
     "nombre": "Gestión Aplicada al Desarrollo de Software II",
-    "correlativas": ["3659", "3652"],
+    "correlativas": ["3653", "3659"],
     "horasSemanales": 4,
     "periodo": "2C4A"
   },
@@ -345,7 +345,7 @@
   {
     "codigo": "3667",
     "nombre": "Gestión de la Calidad en Procesos de Sistemas",
-    "correlativas": ["3647"],
+    "correlativas": ["3642", "3661"],
     "horasSemanales": 4,
     "periodo": "2C4A"
   },
@@ -373,28 +373,28 @@
   {
     "codigo": "3671",
     "nombre": "Proyecto Final de Carrera",
-    "correlativas": ["3667", "3661", "3660", "3659", "3656"],
+    "correlativas": ["3656", "3659", "3660", "3667"],
     "horasSemanales": 4,
     "periodo": "1C5A"
   },
   {
     "codigo": "3672",
     "nombre": "Electiva I",
-    "correlativas": ["3658", "3661", "3663"],
+    "correlativas": ["3652", "3653", "3661"],
     "horasSemanales": 4,
     "periodo": "1C5A"
   },
   {
     "codigo": "3673",
     "nombre": "Electiva II",
-    "correlativas": ["3662", "3666"],
+    "correlativas": ["3652", "3653", "3661"],
     "horasSemanales": 4,
     "periodo": "2C5A"
   },
   {
     "codigo": "3674",
     "nombre": "Electiva III",
-    "correlativas": ["3664", "3665"],
+    "correlativas": ["3652", "3653", "3661"],
     "horasSemanales": 4,
     "periodo": "2C5A"
   },
