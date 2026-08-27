@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MateriaConEstado } from '../types/materia';
-import '../styles/LeyendaInferior.css';
+import '../styles/leyendaInferior.css';
 
 interface LeyendaInferiorProps {
   materiasConEstado: MateriaConEstado[];
