@@ -155,6 +155,7 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   transition: transform 0.25s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
 }
 
 .toggle-tema.oscuro .toggle-tema-thumb {
@@ -162,13 +163,28 @@
 }
 
 .toggle-tema-icono {
-  position: relative;
+  position: absolute;
+  top: 1px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  z-index: 2;
+}
+
+.toggle-tema-icono.sol {
+  left: 1px;
+  color: #ffffff;
+}
+
+.toggle-tema-icono.luna {
+  right: 1px;
   color: var(--text-tertiary);
-  z-index: 1;
+}
+
+.toggle-tema.oscuro .toggle-tema-icono.luna {
+  color: #ffffff;
 }
 
 /* Responsive */
