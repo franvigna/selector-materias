@@ -1,0 +1,23 @@
+# Netlify _headers file
+
+# Cache static assets
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache images
+*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML - no cache para que siempre sirva la última versión
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Security headers (Google valora esto)
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()

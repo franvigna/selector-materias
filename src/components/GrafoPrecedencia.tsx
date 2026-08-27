@@ -16,14 +16,19 @@ import 'reactflow/dist/style.css';
 import type { MateriaConEstado, EstadoMateria } from '../types/materia';
 import '../styles/GrafoPrecedencia.css';
 
+const leerVariableCSS = (nombre: string): string =>
+  getComputedStyle(document.documentElement).getPropertyValue(nombre).trim();
+
 interface GrafoPrecedenciaProps {
   materiasConEstado: MateriaConEstado[];
   onCambiarEstado: (codigo: string, nuevoEstado: EstadoMateria) => void;
+  tema: string;
 }
 
-const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({ 
+const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   materiasConEstado,
-  onCambiarEstado
+  onCambiarEstado,
+  tema
 }) => {
   const clickTimeout = useRef<number | null>(null);
   const clickCount = useRef(0);
@@ -72,24 +77,19 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
         const y = materiaIdx * ySpacing;
 
         let nodeClass = 'react-flow-node-default';
-        let borderColor = '#999';
 
         switch (materia.estado) {
           case 'cursada':
             nodeClass = 'react-flow-node-cursada';
-            borderColor = '#81c784';
             break;
           case 'en_curso':
             nodeClass = 'react-flow-node-en-curso';
-            borderColor = '#64b5f6';
             break;
           case 'disponible':
             nodeClass = 'react-flow-node-disponible';
-            borderColor = '#ffd54f';
             break;
           case 'bloqueada':
             nodeClass = 'react-flow-node-bloqueada';
-            borderColor = '#e57373';
             break;
         }
 
@@ -111,7 +111,8 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
           sourcePosition: Position.Right,
           targetPosition: Position.Left,
           style: {
-            border: `3px solid ${borderColor}`,
+            borderWidth: '3px',
+            borderStyle: 'solid',
             borderRadius: '10px',
             padding: '12px',
             width: 175,
@@ -129,6 +130,8 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
   const initialEdges: Edge[] = useMemo(() => {
     const edges: Edge[] = [];
 
+    const colorEdge = leerVariableCSS('--grafo-edge-color') || '#7e57c2';
+
     materiasConEstado.forEach(materia => {
       materia.correlativas.forEach(correlativaCodigo => {
         edges.push({
@@ -137,14 +140,14 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
           target: materia.codigo,
           type: 'straight',
           animated: false,
-          style: { 
-            stroke: '#7e57c2', 
+          style: {
+            stroke: colorEdge,
             strokeWidth: 2,
             opacity: 0.6
           },
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: '#7e57c2',
+            color: colorEdge,
             width: 20,
             height: 20,
           },
@@ -153,7 +156,8 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     });
 
     return edges;
-  }, [materiasConEstado]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [materiasConEstado, tema]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(createNodes());
   const [edges, , onEdgesChange] = useEdgesState(initialEdges);
@@ -232,13 +236,19 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
     }
   }, [onCambiarEstado]);
 
-  const nodeColor = (node: Node) => {
-    if (node.className?.includes('cursada')) return '#81c784';
-    if (node.className?.includes('en-curso')) return '#64b5f6';
-    if (node.className?.includes('disponible')) return '#ffd54f';
-    if (node.className?.includes('bloqueada')) return '#e57373';
+  const nodeColor = useCallback((node: Node) => {
+    if (node.className?.includes('cursada')) return leerVariableCSS('--estado-cursada-border');
+    if (node.className?.includes('en-curso')) return leerVariableCSS('--estado-en-curso-border');
+    if (node.className?.includes('disponible')) return leerVariableCSS('--estado-disponible-border');
+    if (node.className?.includes('bloqueada')) return leerVariableCSS('--estado-bloqueada-border');
     return '#999';
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tema]);
+
+  const colorFondoPuntos = useMemo(
+    () => leerVariableCSS('--grafo-background-dots') || '#aaa',
+    [tema]
+  );
 
   return (
     <div className="grafo-container-solo">
@@ -255,7 +265,7 @@ const GrafoPrecedencia: React.FC<GrafoPrecedenciaProps> = ({
         maxZoom={1.5}
         defaultViewport={{ x: 0, y: 0, zoom: 0.8 }}
       >
-        <Background color="#aaa" gap={16} />
+        <Background color={colorFondoPuntos} gap={16} />
         <Controls />
         <MiniMap 
           nodeColor={nodeColor}

@@ -39,4 +39,137 @@
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* === Semánticas: modo claro === */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f7fafc;
+  --bg-chip: #f7fafc;
+  --bg-chip-hover: #edf2f7;
+  --bg-overlay: rgba(0, 0, 0, 0.5);
+  --bg-overlay-strong: rgba(0, 0, 0, 0.6);
+  --bg-header-glass: rgba(255, 255, 255, 0.98);
+  --bg-floating-glass: rgba(255, 255, 255, 0.95);
+
+  --text-primary: #1a202c;
+  --text-secondary: #2d3748;
+  --text-tertiary: #4a5568;
+  --text-muted: #718096;
+  --text-disabled: #a0aec0;
+  --text-on-brand: #ffffff;
+
+  --border-color: #e2e8f0;
+  --border-color-strong: #cbd5e0;
+
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-strong: rgba(0, 0, 0, 0.2);
+
+  /* Estados de materia */
+  --estado-cursada-bg: #e8f5e9;
+  --estado-cursada-bg-hover: #c8e6c9;
+  --estado-cursada-border: #81c784;
+  --estado-cursada-badge-bg: #a5d6a7;
+  --estado-cursada-text: #2e7d32;
+  --estado-cursada-node-start: #e8f5e9;
+  --estado-cursada-node-end: #c8e6c9;
+
+  --estado-en-curso-bg: #e3f2fd;
+  --estado-en-curso-bg-hover: #bbdefb;
+  --estado-en-curso-border: #64b5f6;
+  --estado-en-curso-badge-bg: #90caf9;
+  --estado-en-curso-text: #1565c0;
+  --estado-en-curso-node-start: #e3f2fd;
+  --estado-en-curso-node-end: #bbdefb;
+
+  --estado-disponible-bg: #fff9c4;
+  --estado-disponible-bg-hover: #fff59d;
+  --estado-disponible-border: #ffd54f;
+  --estado-disponible-badge-bg: #fff176;
+  --estado-disponible-text: #f57f17;
+  --estado-disponible-node-start: #fff9c4;
+  --estado-disponible-node-end: #fff59d;
+
+  --estado-bloqueada-bg: #ffebee;
+  --estado-bloqueada-bg-hover: #ffcdd2;
+  --estado-bloqueada-border: #e57373;
+  --estado-bloqueada-badge-bg: #ef9a9a;
+  --estado-bloqueada-text: #c62828;
+  --estado-bloqueada-node-start: #ffebee;
+  --estado-bloqueada-node-end: #ffcdd2;
+
+  /* Grafo / ReactFlow */
+  --grafo-bg: #ffffff;
+  --grafo-background-dots: #aaaaaa;
+  --grafo-edge-color: #7e57c2;
+  --grafo-controls-bg: #ffffff;
+  --grafo-controls-bg-hover: #f7fafc;
+  --grafo-minimap-border: #ffffff;
+  --grafo-attribution-bg: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #282c34;
+  --bg-secondary: #21252b;
+  --bg-surface: #282c34;
+  --bg-surface-hover: #2c313a;
+  --bg-chip: #21252b;
+  --bg-chip-hover: #323842;
+  --bg-overlay: rgba(0, 0, 0, 0.65);
+  --bg-overlay-strong: rgba(0, 0, 0, 0.75);
+  --bg-header-glass: rgba(33, 37, 43, 0.95);
+  --bg-floating-glass: rgba(40, 44, 52, 0.92);
+
+  --text-primary: #e6e6e6;
+  --text-secondary: #abb2bf;
+  --text-tertiary: #9da5b4;
+  --text-muted: #828997;
+  --text-disabled: #5c6370;
+  --text-on-brand: #ffffff;
+
+  --border-color: #3e4451;
+  --border-color-strong: #4b5263;
+
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --shadow-color-strong: rgba(0, 0, 0, 0.5);
+
+  --estado-cursada-bg: #34483a;
+  --estado-cursada-bg-hover: #3f5645;
+  --estado-cursada-border: #7fd083;
+  --estado-cursada-badge-bg: #3d6b40;
+  --estado-cursada-text: #a5d6a7;
+  --estado-cursada-node-start: #34483a;
+  --estado-cursada-node-end: #3f5645;
+
+  --estado-en-curso-bg: #2b3c4d;
+  --estado-en-curso-bg-hover: #33475b;
+  --estado-en-curso-border: #6fabe8;
+  --estado-en-curso-badge-bg: #33587a;
+  --estado-en-curso-text: #90caf9;
+  --estado-en-curso-node-start: #2b3c4d;
+  --estado-en-curso-node-end: #33475b;
+
+  --estado-disponible-bg: #4d4626;
+  --estado-disponible-bg-hover: #5c5230;
+  --estado-disponible-border: #e0c15a;
+  --estado-disponible-badge-bg: #6b5a1f;
+  --estado-disponible-text: #ffe082;
+  --estado-disponible-node-start: #4d4626;
+  --estado-disponible-node-end: #5c5230;
+
+  --estado-bloqueada-bg: #4a2c2f;
+  --estado-bloqueada-bg-hover: #58333a;
+  --estado-bloqueada-border: #e88a8a;
+  --estado-bloqueada-badge-bg: #6b3538;
+  --estado-bloqueada-text: #f5b8b8;
+  --estado-bloqueada-node-start: #4a2c2f;
+  --estado-bloqueada-node-end: #58333a;
+
+  --grafo-bg: #282c34;
+  --grafo-background-dots: #4b5263;
+  --grafo-edge-color: #9d8cd8;
+  --grafo-controls-bg: #21252b;
+  --grafo-controls-bg-hover: #2c313a;
+  --grafo-minimap-border: #21252b;
+  --grafo-attribution-bg: rgba(33, 37, 43, 0.8);
 }

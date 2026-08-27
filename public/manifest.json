@@ -1,0 +1,22 @@
+{
+  "name": "Planificador de Carrera UNLaM - Ingeniería en Informática",
+  "short_name": "Planificador UNLaM",
+  "description": "Planificá tu carrera de Ingeniería en Informática en la UNLaM. Grafo interactivo de correlatividades y seguimiento de progreso académico.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "lang": "es-AR",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

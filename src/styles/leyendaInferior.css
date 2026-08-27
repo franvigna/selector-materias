@@ -41,34 +41,34 @@
 }
 
 .estado-badge.cursada {
-  background: #e8f5e9;
-  border-color: #81c784;
+  background: var(--estado-cursada-bg);
+  border-color: var(--estado-cursada-border);
 }
 
 .estado-badge.en-curso {
-  background: #e3f2fd;
-  border-color: #64b5f6;
+  background: var(--estado-en-curso-bg);
+  border-color: var(--estado-en-curso-border);
 }
 
 .estado-badge.disponible {
-  background: #fff9c4;
-  border-color: #ffd54f;
+  background: var(--estado-disponible-bg);
+  border-color: var(--estado-disponible-border);
 }
 
 .estado-badge.bloqueada {
-  background: #ffebee;
-  border-color: #e57373;
+  background: var(--estado-bloqueada-bg);
+  border-color: var(--estado-bloqueada-border);
 }
 
 .estado-numero {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #1a202c;
+  color: var(--text-primary);
 }
 
 .estado-texto {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   white-space: nowrap;
 }
@@ -76,40 +76,51 @@
 /* Responsive */
 @media (max-width: 768px) {
   .leyenda-inferior {
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
-    transform: none;
+    bottom: 0.5rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 1rem);
+    max-width: 100%;
   }
 
   .leyenda-contenedor {
-    gap: 0.75rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.35rem;
     justify-content: center;
-    flex-wrap: wrap;
+    width: 100%;
   }
 
   .estado-badge {
-    padding: 0.5rem 1rem;
-    gap: 0.4rem;
+    padding: 0.25rem 0.4rem;
+    gap: 0.2rem;
+    border-radius: 6px;
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
   }
 
   .estado-numero {
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
 
   .estado-texto {
-    font-size: 0.75rem;
+    font-size: 0.6rem;
   }
 }
 
-@media (max-width: 480px) {
-  .leyenda-contenedor {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem;
+@media (max-width: 380px) {
+  .estado-texto {
+    font-size: 0.55rem;
+  }
+
+  .estado-numero {
+    font-size: 0.75rem;
   }
 
   .estado-badge {
-    justify-content: center;
+    padding: 0.2rem 0.3rem;
   }
 }

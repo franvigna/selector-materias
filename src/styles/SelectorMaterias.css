@@ -462,16 +462,16 @@
 }
 
 .pantalla-completa.error {
-  background: #ffebee;
+  background: var(--estado-bloqueada-bg);
 }
 
 .pantalla-completa.error h2 {
-  color: #c62828;
+  color: var(--estado-bloqueada-text);
   margin-bottom: 1rem;
 }
 
 .pantalla-completa.error p {
-  color: #4a5568;
+  color: var(--text-tertiary);
   margin-bottom: 1.5rem;
 }
 

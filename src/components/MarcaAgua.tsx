@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/MarcaAgua.css';
 
 const MarcaAgua: React.FC = () => {
-  const version = '2.0.0';
+  const version = '3.0.1';
 
   return (
     <div className="marca-agua">

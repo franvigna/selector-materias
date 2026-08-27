@@ -6,6 +6,7 @@ import InfoSuperior from './InfoSuperior';
 import LeyendaInferior from './LeyendaInferior';
 import ModalRecomendador from './ModalRecomendador';
 import MarcaAgua from './MarcaAgua';
+import { useTheme } from '../hooks/useTheme';
 import '../styles/SelectorMaterias.css';
 
 const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
@@ -16,21 +17,41 @@ const procesarMaterias = (materiasJSON: MateriaJSON[]): Materia[] => {
   }));
 };
 
+const CLAVE_STORAGE = 'selector-materias-seleccion';
+
+const leerSeleccionGuardada = (): { cursadas: string[]; enCurso: string[] } => {
+  try {
+    const raw = localStorage.getItem(CLAVE_STORAGE);
+    if (!raw) return { cursadas: [], enCurso: [] };
+    const parsed = JSON.parse(raw);
+    return {
+      cursadas: Array.isArray(parsed.cursadas) ? parsed.cursadas : [],
+      enCurso: Array.isArray(parsed.enCurso) ? parsed.enCurso : []
+    };
+  } catch {
+    return { cursadas: [], enCurso: [] };
+  }
+};
+
 const SelectorMaterias: React.FC = () => {
   const [materias, setMaterias] = useState<Materia[]>([]);
   const [cargando, setCargando] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [materiasCursadas, setMateriasCursadas] = useState<string[]>([]);
-  const [materiasEnCurso, setMateriasEnCurso] = useState<string[]>([]);
+  const [materiasCursadas, setMateriasCursadas] = useState<string[]>(() => leerSeleccionGuardada().cursadas);
+  const [materiasEnCurso, setMateriasEnCurso] = useState<string[]>(() => leerSeleccionGuardada().enCurso);
   const [modalAbierto, setModalAbierto] = useState<boolean>(false);
-  const [anosSeleccionados, setAnosSeleccionados] = useState<{ [key: string]: boolean }>({
-    '1': false,
-    '2': false,
-    '3': false,
-    '4': false,
-    '5': false,
-    'TRANSVERSAL': false
-  });
+  const { tema, toggleTema } = useTheme();
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        CLAVE_STORAGE,
+        JSON.stringify({ cursadas: materiasCursadas, enCurso: materiasEnCurso })
+      );
+    } catch {
+      // storage no disponible, se ignora
+    }
+  }, [materiasCursadas, materiasEnCurso]);
 
   useEffect(() => {
     const cargarMaterias = async () => {
@@ -81,6 +102,33 @@ const SelectorMaterias: React.FC = () => {
     });
   }, [materias, materiasCursadas, materiasEnCurso]);
 
+  // Calcular dinámicamente si todos los años están seleccionados
+  const anosSeleccionados = useMemo(() => {
+    const resultado: { [key: string]: boolean } = {
+      '1': false,
+      '2': false,
+      '3': false,
+      '4': false,
+      '5': false,
+      'TRANSVERSAL': false
+    };
+
+    for (const anio of Object.keys(resultado)) {
+      const materiasDelAnio = materiasConEstado.filter(m => {
+        if (anio === 'TRANSVERSAL') return m.periodo === 'TRANSVERSAL';
+        const anioMateria = m.periodo.charAt(2);
+        return anioMateria === anio;
+      });
+
+      // Si hay materias en ese año, verificar si TODAS están cursadas
+      if (materiasDelAnio.length > 0) {
+        resultado[anio] = materiasDelAnio.every(m => m.estado === 'cursada');
+      }
+    }
+
+    return resultado;
+  }, [materiasConEstado]);
+
   const cambiarEstado = (codigo: string, nuevoEstado: EstadoMateria) => {
     setMateriasCursadas(prev => prev.filter(c => c !== codigo));
     setMateriasEnCurso(prev => prev.filter(c => c !== codigo));
@@ -92,10 +140,6 @@ const SelectorMaterias: React.FC = () => {
     }
   };
 
-  const handleToggleAnio = (anio: string) => {
-    setAnosSeleccionados(prev => ({ ...prev, [anio]: !prev[anio] }));
-  };
-
   const handleImportar = (cursadas: string[], enCurso: string[]) => {
     setMateriasCursadas(cursadas);
     setMateriasEnCurso(enCurso);
@@ -104,14 +148,6 @@ const SelectorMaterias: React.FC = () => {
   const handleLimpiarSeleccion = () => {
     setMateriasCursadas([]);
     setMateriasEnCurso([]);
-    setAnosSeleccionados({
-      '1': false,
-      '2': false,
-      '3': false,
-      '4': false,
-      '5': false,
-      'TRANSVERSAL': false
-    });
   };
 
   if (cargando) {
@@ -149,9 +185,10 @@ const SelectorMaterias: React.FC = () => {
         materiasCursadas={materiasCursadas}
         materiasEnCurso={materiasEnCurso}
         anosSeleccionados={anosSeleccionados}
-        onToggleAnio={handleToggleAnio}
         onCambiarEstado={cambiarEstado}
         onLimpiarSeleccion={handleLimpiarSeleccion}
+        tema={tema}
+        onToggleTema={toggleTema}
       />
 
       <LeyendaInferior
@@ -173,6 +210,7 @@ const SelectorMaterias: React.FC = () => {
       <GrafoPrecedencia
         materiasConEstado={materiasConEstado}
         onCambiarEstado={cambiarEstado}
+        tema={tema}
       />
     </div>
   );

@@ -3,12 +3,13 @@
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.98);
+  background: var(--bg-header-glass);
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   z-index: 100;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid var(--border-color);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .info-contenedor-completo {
@@ -32,7 +33,7 @@
   align-items: center;
   gap: 0.35rem;
   padding: 0.4rem 0.7rem;
-  background: #f7fafc;
+  background: var(--bg-chip);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -40,7 +41,7 @@
 }
 
 .checkbox-ano-compacto:hover {
-  background: #edf2f7;
+  background: var(--bg-chip-hover);
   border-color: #667eea;
   transform: translateY(-2px);
 }
@@ -58,7 +59,7 @@
 
 .checkbox-ano-compacto span {
   font-weight: 600;
-  color: #2d3748;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   white-space: nowrap;
 }
@@ -70,19 +71,20 @@
 
 /* Botón limpiar */
 .boton-limpiar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    /* background: #ffebee; */
-    /* border: 2px solid #e57373; */
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.1s;
-    font-size: 1.25rem;
-    margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.1s;
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+  background: transparent;
+  border: 2px solid transparent;
 }
+
 .boton-limpiar:hover {
   border-color: #ef5350;
   border: 2px solid #e57373;
@@ -110,14 +112,63 @@
 
 .info-label-compacto {
   font-size: 0.95rem;
-  color: #4a5568;
+  color: var(--text-tertiary);
   font-weight: 600;
 }
 
 .info-value-compacto {
   font-size: 1.05rem;
-  color: #1a202c;
+  color: var(--text-primary);
   font-weight: 700;
+}
+
+/* Toggle de tema (sol/luna) */
+.toggle-tema {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.toggle-tema-track {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--bg-chip);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.toggle-tema-thumb {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: transform 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-tema.oscuro .toggle-tema-thumb {
+  transform: translateX(22px);
+}
+
+.toggle-tema-icono {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  color: var(--text-tertiary);
+  z-index: 1;
 }
 
 /* Responsive */
@@ -140,32 +191,45 @@
 
 @media (max-width: 768px) {
   .info-superior {
-    padding: 0.75rem 1rem;
+    padding: 0.5rem 0.75rem;
+    padding-top: 0.5rem;
   }
 
-  .info-contenedor-centrado {
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .info-label-compacto {
-    font-size: 0.85rem;
-  }
-
-  .info-value-compacto {
-    font-size: 0.95rem;
-  }
-
-  .selector-anos-superior {
+  .info-contenedor-completo {
+    flex-direction: column;
     gap: 0.5rem;
   }
 
+  /* Dejar espacio a la izquierda para el botón hamburguesa */
+  .selector-anos-superior {
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 3.5rem; /* espacio para el botón menú */
+  }
+
+  .info-contenedor-centrado {
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+
+  .info-label-compacto {
+    font-size: 0.75rem;
+  }
+
+  .info-value-compacto {
+    font-size: 0.8rem;
+  }
+
   .checkbox-ano-compacto {
-    padding: 0.35rem 0.6rem;
+    padding: 0.25rem 0.45rem;
+    gap: 0.2rem;
   }
 
   .checkbox-ano-compacto span {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 
   .checkbox-ano-compacto input[type="checkbox"] {
@@ -174,8 +238,27 @@
   }
 
   .boton-limpiar {
-    width: 36px;
-    height: 36px;
-    font-size: 1.1rem;
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+    margin-left: 0;
+  }
+
+  .toggle-tema {
+    margin-left: 0.25rem;
+  }
+
+  .toggle-tema-track {
+    width: 40px;
+    height: 22px;
+  }
+
+  .toggle-tema-thumb {
+    width: 15px;
+    height: 15px;
+  }
+
+  .toggle-tema.oscuro .toggle-tema-thumb {
+    transform: translateX(18px);
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { MateriaConEstado, EstadoMateria } from '../types/materia';
+import type { Tema } from '../hooks/useTheme';
 import '../styles/InfoSuperior.css';
 
 interface InfoSuperiorProps {
@@ -7,18 +8,20 @@ interface InfoSuperiorProps {
   materiasCursadas: string[];
   materiasEnCurso: string[];
   anosSeleccionados: { [key: string]: boolean };
-  onToggleAnio: (anio: string) => void;
   onCambiarEstado: (codigo: string, nuevoEstado: EstadoMateria) => void;
   onLimpiarSeleccion: () => void;
+  tema: Tema;
+  onToggleTema: () => void;
 }
 
 const InfoSuperior: React.FC<InfoSuperiorProps> = ({
   materiasConEstado,
   materiasCursadas,
   anosSeleccionados,
-  onToggleAnio,
   onCambiarEstado,
-  onLimpiarSeleccion
+  onLimpiarSeleccion,
+  tema,
+  onToggleTema
 }) => {
   const total = materiasConEstado.length;
   const cursadas = materiasCursadas.length;
@@ -26,8 +29,7 @@ const InfoSuperior: React.FC<InfoSuperiorProps> = ({
   const porcentaje = Math.round((cursadas / total) * 100);
 
   const toggleSeleccionAnio = (anio: string) => {
-    const nuevoEstado = !anosSeleccionados[anio];
-    onToggleAnio(anio);
+    const estaSeleccionado = anosSeleccionados[anio];
 
     const materiasPorAnio = materiasConEstado.filter(m => {
       if (anio === 'TRANSVERSAL') return m.periodo === 'TRANSVERSAL';
@@ -35,13 +37,15 @@ const InfoSuperior: React.FC<InfoSuperiorProps> = ({
       return anioMateria === anio;
     });
 
-    if (nuevoEstado) {
+    if (!estaSeleccionado) {
+      // Marcar todas como cursadas
       materiasPorAnio.forEach(materia => {
-        if (materia.estado === 'disponible' || materia.estado === 'bloqueada') {
+        if (materia.estado !== 'cursada') {
           onCambiarEstado(materia.codigo, 'cursada');
         }
       });
     } else {
+      // Desmarcar todas
       materiasPorAnio.forEach(materia => {
         if (materia.estado === 'cursada' || materia.estado === 'en_curso') {
           onCambiarEstado(materia.codigo, 'disponible');
@@ -105,6 +109,29 @@ const InfoSuperior: React.FC<InfoSuperiorProps> = ({
             <span className="info-label-compacto">Progreso:</span>
             <span className="info-value-compacto">{cursadas} de {total} ({porcentaje}%)</span>
           </div>
+
+          <button
+            className={`toggle-tema ${tema === 'dark' ? 'oscuro' : 'claro'}`}
+            onClick={onToggleTema}
+            role="switch"
+            aria-checked={tema === 'dark'}
+            title={tema === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'}
+          >
+            <span className="toggle-tema-track">
+              <span className="toggle-tema-icono sol" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" width="13" height="13">
+                  <circle cx="12" cy="12" r="5" fill="currentColor" stroke="none" />
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                </svg>
+              </span>
+              <span className="toggle-tema-icono luna" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13">
+                  <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+              </span>
+              <span className="toggle-tema-thumb" />
+            </span>
+          </button>
         </div>
       </div>
     </div>

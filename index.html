@@ -1,12 +1,110 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es-AR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="/notebook.png" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>selector-materias</title>
+
+    <!-- SEO: Título y descripción -->
+    <title>Planificador de Carrera UNLaM - Ingeniería en Informática</title>
+    <meta name="description" content="Planificá tu carrera de Ingeniería en Informática en la Universidad Nacional de La Matanza. Visualizá correlatividades, seguí tu progreso académico y descubrí qué materias podés cursar." />
+    <meta name="keywords" content="UNLaM, Universidad Nacional de La Matanza, Ingeniería en Informática, planificador de carrera, correlatividades, materias, plan de estudios, grafo de precedencia, progreso académico" />
+    <meta name="author" content="Francisco Vignard (Cisco)" />
+
+    <!-- SEO: Robots -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+
+    <!-- SEO: Canonical URL (cambiá esto a tu URL de Netlify) -->
+    <link rel="canonical" href="https://unlam-informatica-planner.netlify.app/" />
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Planificador de Carrera UNLaM - Ingeniería en Informática" />
+    <meta property="og:description" content="Visualizá el grafo de correlatividades, seguí tu progreso y planificá qué materias cursar en Ingeniería en Informática de la UNLaM." />
+    <meta property="og:url" content="https://unlam-informatica-planner.netlify.app/" />
+    <meta property="og:image" content="https://unlam-informatica-planner.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Planificador de Carrera UNLaM - Grafo de correlatividades de Ingeniería en Informática" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content="Planificador UNLaM" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Planificador de Carrera UNLaM - Ingeniería en Informática" />
+    <meta name="twitter:description" content="Planificá tu carrera de Ingeniería en Informática en la UNLaM. Grafo interactivo de correlatividades y seguimiento de progreso." />
+    <meta name="twitter:image" content="https://unlam-informatica-planner.netlify.app/og-image.png" />
+
+    <!-- PWA / Mobile -->
+    <meta name="theme-color" content="#667eea" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Planificador UNLaM" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Datos estructurados JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Planificador de Carrera UNLaM",
+      "description": "Herramienta interactiva para planificar la carrera de Ingeniería en Informática en la Universidad Nacional de La Matanza. Visualización de correlatividades y seguimiento de progreso académico.",
+      "url": "https://unlam-informatica-planner.netlify.app/",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "ARS"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Francisco Vignard",
+        "url": "https://www.linkedin.com/in/franciscovignardel/"
+      },
+      "about": {
+        "@type": "EducationalOrganization",
+        "name": "Universidad Nacional de La Matanza",
+        "alternateName": "UNLaM",
+        "url": "https://www.unlam.edu.ar/"
+      },
+      "inLanguage": "es-AR",
+      "isAccessibleForFree": true
+    }
+    </script>
+
+    <!-- Preconnect para performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
+    <!-- Noscript fallback para SEO - Google ve este contenido si JS no carga -->
+    <noscript>
+      <div style="padding: 2rem; font-family: sans-serif; max-width: 800px; margin: 0 auto;">
+        <h1>Planificador de Carrera - Ingeniería en Informática - UNLaM</h1>
+        <p>Herramienta interactiva para planificar tu carrera de Ingeniería en Informática en la Universidad Nacional de La Matanza.</p>
+        <h2>Funcionalidades</h2>
+        <p>Visualización del grafo de correlatividades con todas las materias de la carrera. Seguimiento de progreso académico: marcá materias como aprobadas o en curso. Análisis de distancia al título para priorizar qué materias cursar. Exportación e importación de tu progreso en formato JSON.</p>
+        <h2>Materias por año</h2>
+        <p>1° Año: Matemática Discreta, Álgebra y Geometría Analítica I, Análisis Matemático I, Física I, Programación Inicial, Programación Estructurada Básica, Introducción a los Sistemas de Información, Introducción a la Gestión de Requisitos, Sistemas de Numeración, Fundamentos de Sistemas Embebidos.</p>
+        <p>Para usar esta aplicación necesitás tener JavaScript habilitado en tu navegador.</p>
+        <p>Desarrollado por <a href="https://www.linkedin.com/in/franciscovignardel/">Francisco Vignard (Cisco)</a> - <a href="https://github.com/franvigna">GitHub</a></p>
+      </div>
+    </noscript>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('selector-materias-tema');
+          if (t !== 'light' && t !== 'dark') {
+            t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

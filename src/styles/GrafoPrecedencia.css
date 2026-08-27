@@ -1,7 +1,8 @@
 .grafo-container-solo {
   width: 100%;
   height: 100%;
-  background: white;
+  background: var(--grafo-bg);
+  transition: background-color 0.25s ease;
 }
 
 /* Estilos para los nodos de ReactFlow */
@@ -33,39 +34,43 @@
 
 .nodo-nombre {
   font-size: 1.2rem;
-    font-weight: 500;
-    color: #2d3748;
-    line-height: 1;
-    text-align: center; 
+  font-weight: 500;
+  color: var(--text-primary);
+  line-height: 1;
+  text-align: center;
 }
 
 /* Colores por estado */
 .react-flow-node-cursada {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%) !important;
+  background: linear-gradient(135deg, var(--estado-cursada-node-start) 0%, var(--estado-cursada-node-end) 100%) !important;
+  border-color: var(--estado-cursada-border) !important;
 }
 
 .react-flow-node-cursada:hover {
-  background: linear-gradient(135deg, #c8e6c9 0%, #a5d6a7 100%) !important;
+  background: linear-gradient(135deg, var(--estado-cursada-node-end) 0%, var(--estado-cursada-bg-hover) 100%) !important;
 }
 
 .react-flow-node-en-curso {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
+  background: linear-gradient(135deg, var(--estado-en-curso-node-start) 0%, var(--estado-en-curso-node-end) 100%) !important;
+  border-color: var(--estado-en-curso-border) !important;
 }
 
 .react-flow-node-en-curso:hover {
-  background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%) !important;
+  background: linear-gradient(135deg, var(--estado-en-curso-node-end) 0%, var(--estado-en-curso-bg-hover) 100%) !important;
 }
 
 .react-flow-node-disponible {
-  background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%) !important;
+  background: linear-gradient(135deg, var(--estado-disponible-node-start) 0%, var(--estado-disponible-node-end) 100%) !important;
+  border-color: var(--estado-disponible-border) !important;
 }
 
 .react-flow-node-disponible:hover {
-  background: linear-gradient(135deg, #fff59d 0%, #fff176 100%) !important;
+  background: linear-gradient(135deg, var(--estado-disponible-node-end) 0%, var(--estado-disponible-bg-hover) 100%) !important;
 }
 
 .react-flow-node-bloqueada {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%) !important;
+  background: linear-gradient(135deg, var(--estado-bloqueada-node-start) 0%, var(--estado-bloqueada-node-end) 100%) !important;
+  border-color: var(--estado-bloqueada-border) !important;
   opacity: 0.8;
 }
 
@@ -86,25 +91,46 @@
 }
 
 .react-flow__controls-button {
-  background: white;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--grafo-controls-bg);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .react-flow__controls-button:hover {
-  background: #f7fafc;
+  background: var(--grafo-controls-bg-hover);
 }
 
 /* MiniMap */
 .react-flow__minimap {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  border: 2px solid white;
+  border: 2px solid var(--grafo-minimap-border);
+}
+
+.react-flow__minimap-mask {
+  fill: var(--grafo-controls-bg);
+  fill-opacity: 0.7;
+}
+
+.react-flow__minimap svg {
+  background: var(--grafo-controls-bg);
 }
 
 /* Attribution */
 .react-flow__attribution {
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--grafo-attribution-bg);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 10px;
+}
+
+/* Responsive - ocultar minimap en mobile */
+@media (max-width: 768px) {
+  .react-flow__minimap {
+    display: none;
+  }
+
+  .react-flow__controls {
+    bottom: 3rem !important;
+    left: 0.25rem !important;
+  }
 }

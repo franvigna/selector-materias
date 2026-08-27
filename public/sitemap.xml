@@ -1,0 +1,7 @@
+# Planificador de Carrera UNLaM
+# https://unlam-informatica-planner.netlify.app
+
+User-agent: *
+Allow: /
+
+Sitemap: https://unlam-informatica-planner.netlify.app/sitemap.xml

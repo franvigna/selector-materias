@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--bg-overlay-strong);
   z-index: 1100;
   animation: fadeIn 0.3s ease;
 }
@@ -19,7 +19,7 @@
   width: 90%;
   max-width: 1200px;
   height: 85vh;
-  background: white;
+  background: var(--bg-surface);
   border-radius: 16px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   z-index: 1101;
@@ -27,6 +27,7 @@
   flex-direction: column;
   overflow: hidden;
   animation: slideIn 0.3s ease;
+  transition: background-color 0.25s ease;
 }
 
 @keyframes fadeIn {
@@ -107,7 +108,7 @@
 }
 
 .tabla-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--bg-chip);
   border-radius: 10px;
 }
 
@@ -144,12 +145,12 @@
 }
 
 .tabla-distancias tbody tr {
-  border-bottom: 1px solid #e2e8f0;
-  transition: background 0.2s;
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.2s;
 }
 
 .tabla-distancias tbody tr:hover {
-  background: #f7fafc;
+  background: var(--bg-surface-hover);
 }
 
 .tabla-distancias td {
@@ -159,31 +160,51 @@
 
 .col-codigo {
   font-weight: 700;
-  color: #4a5568;
+  color: var(--text-tertiary);
   font-family: 'Courier New', monospace;
 }
 
 .col-nombre {
   font-weight: 500;
-  color: #2d3748;
+  color: var(--text-secondary);
   max-width: 400px;
 }
 
 .fila-cursada {
-  background: #e8f5e9;
+  background: var(--estado-cursada-bg);
+}
+
+.fila-cursada .col-codigo,
+.fila-cursada .col-nombre {
+  color: var(--estado-cursada-text);
 }
 
 .fila-en_curso {
-  background: #e3f2fd;
+  background: var(--estado-en-curso-bg);
+}
+
+.fila-en_curso .col-codigo,
+.fila-en_curso .col-nombre {
+  color: var(--estado-en-curso-text);
 }
 
 .fila-disponible {
-  background: #fff9c4;
+  background: var(--estado-disponible-bg);
+}
+
+.fila-disponible .col-codigo,
+.fila-disponible .col-nombre {
+  color: var(--estado-disponible-text);
 }
 
 .fila-bloqueada {
-  background: #ffebee;
+  background: var(--estado-bloqueada-bg);
   opacity: 0.7;
+}
+
+.fila-bloqueada .col-codigo,
+.fila-bloqueada .col-nombre {
+  color: var(--estado-bloqueada-text);
 }
 
 .badge-estado {
@@ -196,23 +217,23 @@
 }
 
 .badge-estado.cursada {
-  background: #a5d6a7;
-  color: #2e7d32;
+  background: var(--estado-cursada-badge-bg);
+  color: var(--estado-cursada-text);
 }
 
 .badge-estado.en_curso {
-  background: #90caf9;
-  color: #1565c0;
+  background: var(--estado-en-curso-badge-bg);
+  color: var(--estado-en-curso-text);
 }
 
 .badge-estado.disponible {
-  background: #fff176;
-  color: #f57f17;
+  background: var(--estado-disponible-badge-bg);
+  color: var(--estado-disponible-text);
 }
 
 .badge-estado.bloqueada {
-  background: #ef9a9a;
-  color: #c62828;
+  background: var(--estado-bloqueada-badge-bg);
+  color: var(--estado-bloqueada-text);
 }
 
 .col-distancia {
@@ -271,7 +292,7 @@
   justify-content: center;
   height: 100%;
   text-align: center;
-  color: #4a5568;
+  color: var(--text-tertiary);
 }
 
 .sin-materias-icono {
@@ -291,12 +312,12 @@
 
 .sin-materias h3 {
   font-size: 2rem;
-  color: #2d3748;
+  color: var(--text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 700;
 }
 
 .sin-materias p {
   font-size: 1.1rem;
-  color: #718096;
+  color: var(--text-muted);
 }
